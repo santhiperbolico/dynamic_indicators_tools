@@ -28,4 +28,4 @@ jobs:
         pre-commit run --all-files
     - name: pytest execute
       run: |
-        pytest
+        cd src && pytest
