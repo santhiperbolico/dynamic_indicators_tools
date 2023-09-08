@@ -1,0 +1,47 @@
+{
+  "system_params": {
+    "system_path": "tests.systems.test_system",
+    "path": "tests/systems/test_plots/",
+    "system_name": "test_system",
+    "args_system": [2],
+    "t0": 0,
+    "t1": 10,
+    "x_min": ["-_pi", -3, 0],
+    "x_max": ["pi", 3, 1],
+    "n_xgrid": 10,
+    "solver_method": "solve_ivp",
+    "n_jobs": 1,
+    "projection_config" : {
+      "2" : {
+        "index_variables" : [0],
+        "function": {
+          "name": "projection_generator",
+          "args": []
+        }
+      }
+    }
+  },
+  "ftle_element_wise":{
+    "execute": true,
+    "h_steps": 0.01,
+    "t_close":true,
+    "params_t_close": {
+      "time_delta": 0.2,
+      "dimensions_close": [true, false, false],
+      "mod_solution": "tau"
+    }
+  },
+  "ftle_grid":{
+    "execute": true
+  },
+  "ftle_variational_equations":{
+    "execute": true,
+    "system": "fun_system_variational_equations"
+  },
+  "lagrangian_descriptors": {
+    "execute": true,
+    "tau": 5,
+    "method_integrate": "fixed_quad",
+    "plot_orbits": true
+  }
+}
