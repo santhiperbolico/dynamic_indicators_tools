@@ -2,7 +2,6 @@ import numpy as np
 import pytest
 
 from dynamic_indicators_tools.differentials_systems.diff_system import DiffVariable
-
 from tests.systems.black_hole_schwarzchild import (
     function_system,
     get_partials_functions_phi,
