@@ -410,7 +410,7 @@ def get_dynamic_indicator(dynamic_indicator_name: str) -> DynamicIndicator:
         )
 
 
-def process_dynamic_indicators(
+def main_process_di(
     system: Dict[str, Any], system_params: Dict[str, Any], dynamic_indicators: Dict[str, Any]
 ) -> None:
     """
