@@ -1,6 +1,8 @@
 import os
 
-from dynamic_indicators_tools.main_dynamic_indicators_process import cmm_process_dynamic_indicators
+from dynamic_indicators_tools.main_dynamic_indicators_process import (
+    multi_process_dynamic_indicators,
+)
 
 PATH = "examples/pendulum_simple/config_files/"
 
@@ -10,4 +12,4 @@ CONFIG_FILES = [
 ]
 
 if __name__ == "__main__":
-    cmm_process_dynamic_indicators(CONFIG_FILES)
+    multi_process_dynamic_indicators(CONFIG_FILES)
