@@ -1,8 +1,8 @@
 # Dynamic Indicators Tools
 
 Conjunto de funciones asociadas al análisis de sistemas dinámicos. Concretamente, enfocado al análisis de estructuras 
-invariantes o indicadores dinámicos como los campos FTLE [[1]](##Referencias), Lagrangian Descriptors [[2]](##Referencias) o determinación de 
-Lagrangian Structure Coehrents (LCS) [[3]](##Referencias).    
+invariantes o indicadores dinámicos como los campos FTLE [[1]](#Referencias), Lagrangian Descriptors [[2]](#Referencias) o determinación de 
+Lagrangian Structure Coehrents (LCS) [[3]](#Referencias).    
 
 ## Cómo comenzar
 Las funciones que contiene este paquete están desarroladas utilizando `Python 3.8`.
