@@ -7,7 +7,9 @@ from dynamic_indicators_tools.dynamic_indicators.dynamic_indicators_process impo
     LagrangianDescriptor,
     get_dynamic_indicator,
 )
-from dynamic_indicators_tools.main_dynamic_indicators_process import cmm_process_dynamic_indicators
+from dynamic_indicators_tools.main_dynamic_indicators_process import (
+    multi_process_dynamic_indicators,
+)
 
 
 @pytest.fixture
@@ -34,5 +36,5 @@ def test_get_dynamic_indicator_error():
 
 
 def test_main_system_process(config_main_test):
-    cmm_process_dynamic_indicators(config_main_test)
+    multi_process_dynamic_indicators(config_main_test)
     assert True
