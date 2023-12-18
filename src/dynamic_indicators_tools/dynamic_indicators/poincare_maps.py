@@ -1,5 +1,5 @@
 from abc import ABC, abstractmethod
-from typing import Any, Callable, Dict, Sequence, Tuple, Union
+from typing import Any, Callable, Dict, List, Sequence, Tuple, Union
 
 import numpy as np
 from attr import attrs
@@ -100,6 +100,36 @@ class PoincareSectionGrid(ABC):
         """
         pass
 
+    @staticmethod
+    @abstractmethod
+    def get_poincare_points_from_x0_grid(
+        x0_grid: Union[np.ndarray, List[np.ndarray]], **kwargs
+    ) -> Tuple[List[np.ndarray], List[np.ndarray]]:
+        """
+        Método que aplica el método get_poincare_points a una lista o array de condiciones
+        iniciales x0_grid. Devuelve dos listas de longitud igual al tamaño de x0_grid con los
+        resultados de cada condición inicial del método get_poincare_points.
+
+        Parameters
+        ----------
+        x0_grid: Union[np.ndarray, List[np.ndarray]]
+            Lista de condiciones iniciales. Si es un array debe de ser de dos dimensiones,
+            con una forma (numero_condiciones_iniciales, dimension_condición_inicial).
+
+        kwargs:
+            Parámetros adicionales del método get_poincare_points
+
+        Returns
+        -------
+        t0_roots_list: List[np.ndarray]
+            Lista con los valores de los arrays de t_roots de get_poincare_points para cada
+            condición inicial.
+        values_roots_list: List[np.ndarray]
+            Lista con los valores de los arrays de values_roots de get_poincare_points para cada
+            condición inicial.
+        """
+        pass
+
 
 @attrs
 class PoincareSectionInterpolate(PoincareSectionGrid):
@@ -181,6 +211,54 @@ class PoincareSectionInterpolate(PoincareSectionGrid):
         t_roots = np.array(t_roots)
         values_roots = diff_system.variable.solution(t_roots).T
         return t_roots, values_roots
+
+    @staticmethod
+    def get_poincare_points_from_x0_grid(
+        x0_grid: Union[np.ndarray, List[np.ndarray]], **kwargs
+    ) -> Tuple[List[np.ndarray], List[np.ndarray]]:
+        """
+        Método que aplica el método get_poincare_points a una lista o array de condiciones
+        iniciales x0_grid. Devuelve dos listas de longitud igual al tamaño de x0_grid con los
+        resultados de cada condición inicial del método get_poincare_points.
+
+        Parameters
+        ----------
+        x0_grid: Union[np.ndarray, List[np.ndarray]]
+            Lista de condiciones iniciales. Si es un array debe de ser de dos dimensiones,
+            con una forma (numero_condiciones_iniciales, dimension_condición_inicial).
+
+        kwargs:
+            Parámetros adicionales del método get_poincare_points
+
+        Returns
+        -------
+        t0_roots_list: List[np.ndarray]
+            Lista con los valores de los arrays de t_roots de get_poincare_points para cada
+            condición inicial.
+        values_roots_list: List[np.ndarray]
+            Lista con los valores de los arrays de values_roots de get_poincare_points para cada
+            condición inicial.
+        """
+
+        t0_roots_list = []
+        values_roots_list = []
+        if isinstance(x0_grid, list):
+            for x0 in x0_grid:
+                t0_roots, values_roots = PoincareSectionInterpolate.get_poincare_points(
+                    x0=x0, **kwargs
+                )
+                t0_roots_list.append(t0_roots)
+                values_roots_list.append(values_roots)
+            return t0_roots_list, values_roots_list
+
+        for i in range(x0_grid.shape[0]):
+            x0 = x0_grid[i, :]
+            t0_roots, values_roots = PoincareSectionInterpolate.get_poincare_points(
+                x0=x0, **kwargs
+            )
+            t0_roots_list.append(t0_roots)
+            values_roots_list.append(values_roots)
+        return t0_roots_list, values_roots_list
 
 
 @attrs
@@ -284,11 +362,58 @@ class PoincareSectionOdeTimeRange(PoincareSectionGrid):
         values_roots = np.array(values_roots)
         return t_roots, values_roots
 
+    @staticmethod
+    def get_poincare_points_from_x0_grid(
+        x0_grid: Union[np.ndarray, List[np.ndarray]], **kwargs
+    ) -> Tuple[List[np.ndarray], List[np.ndarray]]:
+        """
+        Método que aplica el método get_poincare_points a una lista o array de condiciones
+        iniciales x0_grid. Devuelve dos listas de longitud igual al tamaño de x0_grid con los
+        resultados de cada condición inicial del método get_poincare_points.
 
-def get_poincare_grid_method(method: str) -> PoincareSectionGrid.get_poincare_points:
+        Parameters
+        ----------
+        x0_grid: Union[np.ndarray, List[np.ndarray]]
+            Lista de condiciones iniciales. Si es un array debe de ser de dos dimensiones,
+            con una forma (numero_condiciones_iniciales, dimension_condición_inicial).
+
+        kwargs:
+            Parámetros adicionales del método get_poincare_points
+
+        Returns
+        -------
+        t0_roots_list: List[np.ndarray]
+            Lista con los valores de los arrays de t_roots de get_poincare_points para cada
+            condición inicial.
+        values_roots_list: List[np.ndarray]
+            Lista con los valores de los arrays de values_roots de get_poincare_points para cada
+            condición inicial.
+        """
+
+        t0_roots_list = []
+        values_roots_list = []
+        if isinstance(x0_grid, list):
+            for x0 in x0_grid:
+                t0_roots, values_roots = PoincareSectionOdeTimeRange.get_poincare_points(
+                    x0=x0, **kwargs
+                )
+                t0_roots_list.append(t0_roots)
+                values_roots_list.append(values_roots)
+            return t0_roots_list, values_roots_list
+
+        for i in range(x0_grid.shape[0]):
+            x0 = x0_grid[i, :]
+            t0_roots, values_roots = PoincareSectionOdeTimeRange.get_poincare_points(
+                x0=x0, **kwargs
+            )
+            t0_roots_list.append(t0_roots)
+            values_roots_list.append(values_roots)
+        return t0_roots_list, values_roots_list
+
+
+def get_poincare_grid_method(method: str) -> PoincareSectionGrid:
     """
-    Función que devuelve el método  get_poincare_points de la clase
-    PoincareSectionGrid asociada al método.
+    Función que devuelve la clase PoincareSectionGrid asociada al método.
 
     Parameters
     ----------
@@ -297,15 +422,15 @@ def get_poincare_grid_method(method: str) -> PoincareSectionGrid.get_poincare_po
 
     Returns
     -------
-    get_poincare_points: PoincarePointsFunction
-        Función get_poincare_points de la clase asociada.
+    get_poincare_points: PoincareSectionGrid
+        Objeto de la clase asociada.
     """
     dic_methods = {
-        PoincareSectionInterpolate.name: PoincareSectionInterpolate.get_poincare_points,
-        PoincareSectionOdeTimeRange.name: PoincareSectionOdeTimeRange.get_poincare_points,
+        PoincareSectionInterpolate.name: PoincareSectionInterpolate,
+        PoincareSectionOdeTimeRange.name: PoincareSectionOdeTimeRange,
     }
     try:
-        return dic_methods[method]
+        return dic_methods[method]()
     except KeyError:
         raise ValueError(
             f"El método de Poincaré {method} no está implementado."
