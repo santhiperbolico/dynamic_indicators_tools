@@ -207,6 +207,19 @@ def get_formated_params(
             ),
             "plot_orbits": dynamic_indicators["lagrangian_descriptors"].get("plot_orbits", False),
         },
+        "poincare_section": {
+            "execute": dynamic_indicators["poincare_section"].get("execute", False),
+            "method_poincare": dynamic_indicators["poincare_section"].get(
+                "method_poincare", "PoincareSectionInterpolate"
+            ),
+            "x0_grid": [
+                np.array([format_symbolic_number(v) for v in x0])
+                for x0 in dynamic_indicators["poincare_section"].get("x0_grid", [])
+            ],
+            "n_points": dynamic_indicators["poincare_section"].get("n_points", 100),
+            "poincare_map": dynamic_indicators["poincare_section"].get("poincare_map", None),
+            "params_root": dynamic_indicators["poincare_section"].get("params_root", None),
+        },
     }
     dynamic_indicators.update(update_dynamic_indicators)
     return system_params, dynamic_indicators
@@ -246,6 +259,7 @@ def _get_main_params(
         "ftle_variational_equations": main_config.get(
             "ftle_variational_equations", {"execute": False}
         ),
+        "poincare_section": main_config.get("poincare_section", {"execute": False}),
     }
     system_path = system_params.pop("system_path")
     system = get_system_function(system_path)
@@ -257,6 +271,11 @@ def _get_main_params(
         system_ve_name = dynamic_indicators["ftle_variational_equations"]["system"]
         system_ve = import_string(f"{system_path}.{system_ve_name}")
         dynamic_indicators["ftle_variational_equations"]["system"] = system_ve
+
+    if dynamic_indicators["poincare_section"].get("poincare_map", None):
+        poincare_map_name = dynamic_indicators["poincare_section"]["poincare_map"]
+        poincare_map = import_string(f"{system_path}.{poincare_map_name}")
+        dynamic_indicators["poincare_section"]["poincare_map"] = poincare_map
 
     return system, system_params, dynamic_indicators
 

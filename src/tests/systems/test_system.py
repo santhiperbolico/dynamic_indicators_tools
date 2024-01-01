@@ -42,3 +42,7 @@ def projection_generator():
         return np.sum(variables, axis=0) * 0
 
     return projection
+
+
+def poincare_map_function(x: np.ndarray):
+    return x[1] - x[0]

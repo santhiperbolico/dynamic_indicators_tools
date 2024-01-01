@@ -209,7 +209,9 @@ class PoincareSectionInterpolate(PoincareSectionGrid):
             if converged:
                 t_roots.append(root)
         t_roots = np.array(t_roots)
-        values_roots = diff_system.variable.solution(t_roots).T
+        values_roots = np.array([])
+        if t_roots.size > 0:
+            values_roots = diff_system.variable.solution(t_roots).T
         return t_roots, values_roots
 
     @staticmethod
@@ -243,21 +245,16 @@ class PoincareSectionInterpolate(PoincareSectionGrid):
         t0_roots_list = []
         values_roots_list = []
         if isinstance(x0_grid, list):
-            for x0 in x0_grid:
-                t0_roots, values_roots = PoincareSectionInterpolate.get_poincare_points(
-                    x0=x0, **kwargs
-                )
-                t0_roots_list.append(t0_roots)
-                values_roots_list.append(values_roots)
-            return t0_roots_list, values_roots_list
+            x0_grid = np.array(x0_grid)
 
         for i in range(x0_grid.shape[0]):
             x0 = x0_grid[i, :]
             t0_roots, values_roots = PoincareSectionInterpolate.get_poincare_points(
                 x0=x0, **kwargs
             )
-            t0_roots_list.append(t0_roots)
-            values_roots_list.append(values_roots)
+            if t0_roots.size > 0:
+                t0_roots_list.append(t0_roots)
+                values_roots_list.append(values_roots)
         return t0_roots_list, values_roots_list
 
 

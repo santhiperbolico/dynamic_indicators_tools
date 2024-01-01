@@ -22,7 +22,7 @@
     }
   },
   "ftle_element_wise":{
-    "execute": true,
+    "execute": false,
     "h_steps": 0.01,
     "t_close":true,
     "params_t_close": {
@@ -32,16 +32,23 @@
     }
   },
   "ftle_grid":{
-    "execute": true
+    "execute": false
   },
   "ftle_variational_equations":{
-    "execute": true,
+    "execute": false,
     "system": "fun_system_variational_equations"
   },
   "lagrangian_descriptors": {
-    "execute": true,
+    "execute": false,
     "tau": 5,
     "method_integrate": "fixed_quad",
     "plot_orbits": true
+  },
+  "poincare_section": {
+    "execute": true,
+    "method_poincare": "PoincareSectionInterpolate",
+    "x0_grid": [[0, 1], [1, -1], [1, 0], [2, 3]],
+    "n_points": 100,
+    "poincare_map": "poincare_map_function"
   }
 }
