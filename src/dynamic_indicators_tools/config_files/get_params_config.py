@@ -225,6 +225,11 @@ def get_formated_params(
     return system_params, dynamic_indicators
 
 
+def format_x0_grid_poincare(dict_config: Dict[str, Any]):
+    # TODO Re-estructurar el config de los parámetros.
+    pass
+
+
 def _get_main_params(
     main_config: Dict[str, Any]
 ) -> Tuple[Dict[str, Any], Dict[str, Any], Dict[str, Any]]:

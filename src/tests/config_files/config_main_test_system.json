@@ -49,6 +49,15 @@
     "method_poincare": "PoincareSectionInterpolate",
     "x0_grid": [[0, 1], [1, -1], [1, 0], [2, 3]],
     "n_points": 100,
-    "poincare_map": "poincare_map_function"
+    "poincare_map": "poincare_map_function",
+    "initial_conditions": {
+        "function_generator": "poincare_initial_conditions_function",
+        "params_function":{
+          "n_points": 100,
+          "x_min": [0, 0],
+          "x_max": [2, 2]
+        }
+    }
+
   }
 }
