@@ -24,7 +24,9 @@ from dynamic_indicators_tools.dynamic_indicators.lagrangian_descriptors import (
 from dynamic_indicators_tools.dynamic_indicators.plot_descriptors import (
     plot_descriptors_map,
     plot_extremals_solutions,
+    plot_poincare_sections,
 )
+from dynamic_indicators_tools.dynamic_indicators.poincare_maps import get_poincare_grid_method
 
 
 def create_system(system: Dict[str, Any], system_params: Dict[str, Any]) -> FlowMap:
@@ -73,6 +75,71 @@ class DynamicIndicator(ABC):
         Proceso que ejecuta el indicador dinámico
         """
         pass
+
+
+@attrs
+class PoincareSections(DynamicIndicator):
+    """
+    Proceso que calcula la sección de Poincaré para un determinado
+    sistema diferencial.
+    """
+
+    def process(
+        self,
+        system: Dict[str, Any],
+        system_params: Dict[str, Any],
+        dynamic_indicators_params: Dict[str, Any],
+    ) -> None:
+        logging.info("-- Cargando parámetros.")
+        path_fig = system_params.get("path", ".")
+        axis_data = system_params["axis"]
+        system_name = system_params.get("system_name")
+        args_system = system_params.get("args_system")
+        t0 = system_params.get("t0")
+        solver_method = system_params.get("solver_method")
+        t1 = format_symbolic_number(system_params.get("t1"))
+        # n_xgrid = system_params.get("n_xgrid")
+        # x_min = system_params.get("x_min")
+        # x_max = system_params.get("x_max")
+        # n_jobs = system_params.get("n_jobs")
+        # projection_config = system_params.get("projection_config")
+        poincare_method_name = dynamic_indicators_params.get("method_poincare")
+        x0_grid = dynamic_indicators_params.get("x0_grid")
+        n_points = dynamic_indicators_params.get("n_points")
+        poincare_map = dynamic_indicators_params.get("poincare_map")
+        params_root = dynamic_indicators_params.get("params_root")
+        # TODO Estaria bien que x0_grid respondiera a un subespacio donde le pudiesemos indicar
+        #  el número de puntos, por ejemplo una recta.
+
+        logging.info("-- Parámetros del proceso:")
+        logging.info("\t T=%i" % t1)
+        logging.info("\t Número de puntos =%i" % n_points)
+        logging.info("\t Solver usado = %s " % solver_method)
+        logging.info("\t Las condiciones iniciales usadas son:")
+        for x0 in x0_grid:
+            logging.info("\t %s " % (str(list(x0))))
+
+        logging.info("-- Ejecutando el cálculo la sección de poincaré.")
+        fname = f"{system_name}_poincare_sections_wise_t_{t1:.0f}_nx_grid_{n_points:.0f}"
+        filename = os.path.join(path_fig, fname + ".png")
+        poincare_method = get_poincare_grid_method(poincare_method_name)
+        diff_system = create_system(system, system_params).diff_system
+        t0_roots_list, values_roots_list = poincare_method.get_poincare_points_from_x0_grid(
+            x0_grid=x0_grid,
+            diff_system=diff_system,
+            poincare_map=poincare_map,
+            solver_method=solver_method,
+            t_span=[t0, t1],
+            n_points=n_points,
+            args=args_system,
+            params_root=params_root,
+        )
+
+        _ = plot_poincare_sections(
+            values=values_roots_list,
+            filename=filename,
+            axis=axis_data,
+        )
 
 
 @attrs
@@ -383,6 +450,7 @@ DynamicIndicatorDict = {
     "ftle_grid": FtleGrid,
     "lagrangian_descriptors": LagrangianDescriptor,
     "ftle_variational_equations": FtleVariationalEquations,
+    "poincare_section": PoincareSections,
 }
 
 

@@ -42,3 +42,12 @@ def projection_generator():
         return np.sum(variables, axis=0) * 0
 
     return projection
+
+
+def poincare_map_function(x: np.ndarray):
+    return x[1] - x[0]
+
+
+def poincare_initial_conditions_function(x_min: np.ndarray, x_max: np.ndarray, n_points: int):
+    steps = np.linspace(0, 1, n_points)
+    return (x_max - x_min) * steps + x_min
