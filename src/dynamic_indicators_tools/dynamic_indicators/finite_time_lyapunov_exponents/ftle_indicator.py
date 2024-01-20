@@ -7,10 +7,14 @@ from attr import attrs
 
 from .ftle_params import FTLE_ELEMENT_WISE_PARAMS, FTLE_GRID_PARAMS, FTLE_VARIATIONAL_EQUATIONS
 from .ftle_utils import ftl_variational_equations, ftle_element_wise, ftle_grid
-from dynamic_indicators_tools.config_files.params_methods import Param, ParamProcessor, ParamType
 from dynamic_indicators_tools.dynamic_indicators.dynamic_indicators_process import (
     DynamicIndicator,
     create_system,
+)
+from dynamic_indicators_tools.dynamic_indicators.params_methods import (
+    Param,
+    ParamProcessor,
+    ParamType,
 )
 from dynamic_indicators_tools.dynamic_indicators.plot_descriptors import plot_descriptors_map
 

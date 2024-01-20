@@ -4,12 +4,12 @@ from typing import Any, Dict
 
 from attr import attrs
 
-from dynamic_indicators_tools.config_files.params_methods import ParamProcessor
 from dynamic_indicators_tools.differentials_systems.diff_system import (
     DiffSystem,
     DiffVariable,
     FlowMap,
 )
+from dynamic_indicators_tools.dynamic_indicators.params_methods import ParamProcessor
 
 
 def create_system(system_params: Dict[str, Any]) -> FlowMap:

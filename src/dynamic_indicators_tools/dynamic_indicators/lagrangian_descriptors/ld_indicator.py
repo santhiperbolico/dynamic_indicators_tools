@@ -6,10 +6,14 @@ import numpy as np
 
 from .ld_params import LD_PARAMS
 from .ld_utils import lagrangian_descriptors
-from dynamic_indicators_tools.config_files.params_methods import Param, ParamProcessor, ParamType
 from dynamic_indicators_tools.dynamic_indicators.dynamic_indicators_process import (
     DynamicIndicator,
     create_system,
+)
+from dynamic_indicators_tools.dynamic_indicators.params_methods import (
+    Param,
+    ParamProcessor,
+    ParamType,
 )
 from dynamic_indicators_tools.dynamic_indicators.plot_descriptors import plot_descriptors_map
 

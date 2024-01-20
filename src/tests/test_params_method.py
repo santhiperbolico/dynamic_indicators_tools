@@ -1,9 +1,7 @@
 import numpy as np
 import pytest
 
-from dynamic_indicators_tools.config_files.get_params_config import (  # get_main_params,
-    format_symbolic_number,
-)
+from dynamic_indicators_tools.dynamic_indicators.params_methods import format_symbolic_number
 
 
 @pytest.mark.parametrize(

@@ -2,7 +2,7 @@ from typing import Any, Dict
 
 import numpy as np
 
-from dynamic_indicators_tools.config_files.params_methods import (
+from dynamic_indicators_tools.dynamic_indicators.params_methods import (
     GENERALS_PARAMS,
     Param,
     ParamType,
