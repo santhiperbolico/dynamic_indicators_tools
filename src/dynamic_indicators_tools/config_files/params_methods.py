@@ -20,6 +20,7 @@ class ParamType(enum.Enum):
     SYSTEM = 1
     INDICATOR = 2
     EXECUTE = 3
+    INITIALS_CONDITIONS = 4
 
 
 @attr.s(frozen=True)
@@ -246,7 +247,7 @@ def format_args_system(args_system: List[str]) -> Sequence[float]:
     return tuple([format_symbolic_number(param) for param in args_system])
 
 
-def format_bounds_variables(x: np.ndarray) -> np.ndarray:
+def format_bounds_variables(x: List[Union[int, float, str]]) -> np.ndarray:
     """
     Función que formatea los límites en el espacio de fase del sistema.
 
@@ -323,7 +324,7 @@ GENERALS_PARAMS = [
     Param("path", ParamType.SYSTEM, default_value="."),
     Param("system_name", ParamType.SYSTEM),
     Param("axis", ParamType.SYSTEM, [0, 1], format_axis_system),
-    Param("args_system", ParamType.SYSTEM, format_function=format_args_system),
+    Param("args_system", ParamType.SYSTEM, [], format_function=format_args_system),
     Param("t0", ParamType.SYSTEM, default_value=0, format_function=format_symbolic_number),
     Param("solver_method", ParamType.SYSTEM, "solve_ivp"),
     Param("execute", ParamType.EXECUTE, default_value=False),

@@ -9,13 +9,14 @@ from .finite_time_lyapunov_exponents.ftle_indicator import (
     FtleVariationalEquations,
 )
 from .lagrangian_descriptors.ld_indicator import LagrangianDescriptor
+from .poincare_maps.poincare_indicator import PoincareSections
 
 DynamicIndicatorDict = {
     FtleElementWise.name_dynamic_indicator: FtleElementWise,
     FtleGrid.name_dynamic_indicator: FtleGrid,
-    "lagrangian_descriptors": LagrangianDescriptor,
+    LagrangianDescriptor.name_dynamic_indicator: LagrangianDescriptor,
     FtleVariationalEquations.name_dynamic_indicator: FtleVariationalEquations,
-    # "poincare_section": PoincareSections,
+    PoincareSections.name_dynamic_indicator: PoincareSections,
 }
 
 
