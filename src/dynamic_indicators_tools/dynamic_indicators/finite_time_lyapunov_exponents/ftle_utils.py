@@ -84,9 +84,9 @@ def ftle_fun(
 def ftle_element_wise(
     flow: FlowMap,
     t: Union[int, float],
-    x0_min_grid: np.ndarray,
-    x0_max_grid: np.ndarray,
-    n_grid_x: Union[int, np.ndarray],
+    x0_min: np.ndarray,
+    x0_max: np.ndarray,
+    n_xgrid: Union[int, np.ndarray],
     h_steps: Union[int, float, np.ndarray] = None,
     params_t_close: Dict[str, Any] = None,
     n_jobs: int = -1,
@@ -103,10 +103,10 @@ def ftle_element_wise(
         Flujo del cual se calcula los ftle.
     t: Union[int, float]
         Valor del tiempo.
-    x0_min_grid: np.ndarray
+    x0_min: np.ndarray
         Array de dimensión (n_variables,) que indica el valor inferior
         de la malla.
-    x0_max_grid: np.ndarray
+    x0_max: np.ndarray
         Array de dimensión (n_variables,) que indica el valor superior
         de la malla.
     nx_grid: Union[int, np.ndarray]
@@ -126,14 +126,14 @@ def ftle_element_wise(
     -------
     result: ResultFtleMethods
     """
-    n_var = x0_max_grid.size
-    if isinstance(n_grid_x, int):
-        n_grid_x = np.ones(n_var).astype(int) * n_grid_x
-    if x0_min_grid.size != n_var:
+    n_var = x0_max.size
+    if isinstance(n_xgrid, int):
+        n_xgrid = np.ones(n_var).astype(int) * n_xgrid
+    if x0_min.size != n_var:
         raise DoesntCoincideDimension(
             "La dimensión de x0_min_grid y x0_max_grid" " deben ser iguales."
         )
-    if n_grid_x.size != n_var:
+    if n_xgrid.size != n_var:
         raise DoesntCoincideDimension(
             "La dimensión de nx_grid no coincide con el número de variables."
         )
@@ -141,30 +141,22 @@ def ftle_element_wise(
         params_t_close = {}
 
     if h_steps is None:
-        h_steps = (x0_max_grid - x0_min_grid) / n_grid_x
+        h_steps = (x0_max - x0_min) / n_xgrid
     if n_jobs < 2:
         return _ftle_map_non_paralelizable(
-            flow, t, x0_min_grid, x0_max_grid, n_grid_x, h_steps, params_t_close, projection_config
+            flow, t, x0_min, x0_max, n_xgrid, h_steps, params_t_close, projection_config
         )
     return _ftle_map_paralelizable(
-        flow,
-        t,
-        x0_min_grid,
-        x0_max_grid,
-        n_grid_x,
-        h_steps,
-        params_t_close,
-        n_jobs,
-        projection_config,
+        flow, t, x0_min, x0_max, n_xgrid, h_steps, params_t_close, n_jobs, projection_config
     )
 
 
 def _ftle_map_non_paralelizable(
     flow: FlowMap,
     t: Union[int, float],
-    x0_min_grid: np.ndarray,
-    x0_max_grid: np.ndarray,
-    nx_grid: np.ndarray,
+    x0_min: np.ndarray,
+    x0_max: np.ndarray,
+    n_xgrid: np.ndarray,
     h_steps: Union[int, float, np.ndarray],
     params_t_close: Dict[str, Any] = None,
     projection_config: Dict[int, Projection] = None,
@@ -178,13 +170,13 @@ def _ftle_map_non_paralelizable(
         Flujo del cual se calcula los ftle.
     t: Union[int, float]
         Valor del tiempo.
-    x0_min_grid: np.ndarray
+    x0_min: np.ndarray
         Array de dimensión (n_variables,) que indica el valor inferior
         de la malla.
-    x0_max_grid: np.ndarray
+    x0_max: np.ndarray
         Array de dimensión (n_variables,) que indica el valor superior
         de la malla.
-    nx_grid: np.ndarray
+    n_xgrid: np.ndarray
         Array con el número de puntos generados por variable.
     h_steps: Union[int, float, np.ndarray], default None
         Array que indica el paso de las derivadas numéticas para cada dimensión
@@ -196,9 +188,9 @@ def _ftle_map_non_paralelizable(
     -------
     result: ResultFtleMethods
     """
-    n_var = x0_max_grid.size
+    n_var = x0_max.size
     grid_points = np.meshgrid(
-        *[np.linspace(x0_min_grid[i], x0_max_grid[i], nx_grid[i]) for i in range(n_var)]
+        *[np.linspace(x0_min[i], x0_max[i], n_xgrid[i]) for i in range(n_var)]
     )
     grid_points = project_grid_data(grid_points, projection_config)
     ftle_grid = np.zeros(grid_points[0].shape)
@@ -219,9 +211,9 @@ def _ftle_map_non_paralelizable(
 def _ftle_map_paralelizable(
     flow: FlowMap,
     t: Union[int, float],
-    x0_min_grid: np.ndarray,
-    x0_max_grid: np.ndarray,
-    nx_grid: np.ndarray,
+    x0_min: np.ndarray,
+    x0_max: np.ndarray,
+    n_xgrid: np.ndarray,
     h_steps: Union[int, float, np.ndarray],
     params_t_close: Dict[str, Any],
     n_jobs: int,
@@ -236,13 +228,13 @@ def _ftle_map_paralelizable(
         Flujo del cual se calcula los ftle.
     t: Union[int, float]
         Valor del tiempo.
-    x0_min_grid: np.ndarray
+    x0_min: np.ndarray
         Array de dimensión (n_variables,) que indica el valor inferior
         de la malla.
-    x0_max_grid: np.ndarray
+    x0_max: np.ndarray
         Array de dimensión (n_variables,) que indica el valor superior
         de la malla.
-    nx_grid: np.ndarray
+    n_xgrid: np.ndarray
          Array con el número de puntos generados por variable.
     h_steps: Union[int, float, np.ndarray], default None
         Array que indica el paso de las derivadas numéticas para cada dimensión
@@ -256,9 +248,9 @@ def _ftle_map_paralelizable(
     -------
     result: ResultFtleMethods
     """
-    n_var = x0_max_grid.size
+    n_var = x0_max.size
     grid_points = np.meshgrid(
-        *[np.linspace(x0_min_grid[i], x0_max_grid[i], nx_grid[i]) for i in range(n_var)]
+        *[np.linspace(x0_min[i], x0_max[i], n_xgrid[i]) for i in range(n_var)]
     )
     grid_points = project_grid_data(grid_points, projection_config)
     ftle_grid = np.zeros(grid_points[0].shape)
@@ -284,9 +276,9 @@ def _ftle_map_paralelizable(
 def diff_flow_grid(
     flow: FlowMap,
     t: Union[int, float],
-    x0_min_grid: np.ndarray,
-    x0_max_grid: np.ndarray,
-    nx_grid: Union[int, np.ndarray],
+    x0_min: np.ndarray,
+    x0_max: np.ndarray,
+    n_xgrid: Union[int, np.ndarray],
     n_jobs: int = -1,
     projection_config: Dict[int, Projection] = None,
 ) -> Tuple[Union[Sequence[np.ndarray], str], Sequence[np.ndarray]]:
@@ -304,13 +296,13 @@ def diff_flow_grid(
         Flujo el cual queremos calcular las derivadas parciales.
     t: Union[int, float]
         Valor del tiempo.
-    x0_min_grid: np.ndarray
+    x0_min: np.ndarray
         Array de dimensión (n_variables,) que indica el valor inferior
         de la malla.
-    x0_max_grid: np.ndarray
+    x0_max: np.ndarray
         Array de dimensión (n_variables,) que indica el valor superior
         de la malla.
-    nx_grid: Union[int, Sequence[int]]
+    n_xgrid: Union[int, Sequence[int]]
         Número de puntos generados por variable, donde el número
         total de puntos será nx_grid^(n_variables.).  Si pasamos
         un entero se aplicará a todas las dimensiones. Si es una
@@ -330,21 +322,21 @@ def diff_flow_grid(
         donde el elemento i de la lista representa el valor de la dereivada parcial de la
         variable x_i.
     """
-    n_var = x0_max_grid.size
-    if x0_min_grid.shape != x0_max_grid.shape:
+    n_var = x0_max.size
+    if x0_min.shape != x0_max.shape:
         raise DoesntCoincideDimension(
             "La dimensión de x0_min_grid y x0_max_grid" " deben ser iguales."
         )
-    if isinstance(nx_grid, int):
-        nx_grid = np.ones(n_var).astype(int) * nx_grid
-    nx_grid_1 = nx_grid == 1
-    h = (x0_max_grid - x0_min_grid) / (nx_grid - 1)
-    h[nx_grid_1] = (x0_max_grid[nx_grid_1] - x0_min_grid[nx_grid_1]) / (nx_grid[nx_grid_1])
+    if isinstance(n_xgrid, int):
+        n_xgrid = np.ones(n_var).astype(int) * n_xgrid
+    nx_grid_1 = n_xgrid == 1
+    h = (x0_max - x0_min) / (n_xgrid - 1)
+    h[nx_grid_1] = (x0_max[nx_grid_1] - x0_min[nx_grid_1]) / (n_xgrid[nx_grid_1])
     grid_points, zz = flow.flow_grid(
         t=t,
-        x0_min_grid=x0_min_grid - h,
-        x0_max_grid=x0_max_grid + h,
-        nx_grid=nx_grid + 2,
+        x0_min=x0_min - h,
+        x0_max=x0_max + h,
+        n_xgrid=n_xgrid + 2,
         n_jobs=n_jobs,
         projection_config=projection_config,
     )
@@ -356,9 +348,9 @@ def diff_flow_grid(
 def ftle_grid(
     flow: FlowMap,
     t: Union[int, float],
-    x0_min_grid: np.ndarray,
-    x0_max_grid: np.ndarray,
-    nx_grid: Union[int, np.ndarray],
+    x0_min: np.ndarray,
+    x0_max: np.ndarray,
+    n_xgrid: Union[int, np.ndarray],
     n_jobs: int = -1,
     projection_config: Dict[int, Projection] = None,
 ) -> ResultFtleMethods:
@@ -375,13 +367,13 @@ def ftle_grid(
         Flujo del cual se calcula los ftle.
     t: Union[int, float]
         Valor del tiempo.
-    x0_min_grid: np.ndarray
+    x0_min: np.ndarray
         Array de dimensión (n_variables,) que indica el valor inferior
         de la malla.
-    x0_max_grid: np.ndarray
+    x0_max: np.ndarray
         Array de dimensión (n_variables,) que indica el valor superior
         de la malla.
-    nx_grid: Union[int, Sequence[int]]
+    n_xgrid: Union[int, Sequence[int]]
         Número de puntos generados por variable, donde el número
         total de puntos será nx_grid^(n_variables.). Si pasamos
         un entero se aplicará a todas las dimensiones. Si es una
@@ -396,7 +388,7 @@ def ftle_grid(
     result: ResultFtleMethods
     """
     grid_points, diff_flow = diff_flow_grid(
-        flow, t, x0_min_grid, x0_max_grid, nx_grid, n_jobs, projection_config
+        flow, t, x0_min, x0_max, n_xgrid, n_jobs, projection_config
     )
     ftle_grid = np.zeros(diff_flow[0].shape[:-1])
     delta_t = abs(t - flow.t0)
@@ -414,9 +406,9 @@ def ftle_grid(
 def ftl_variational_equations(
     flow: FlowMap,
     t: Union[int, float],
-    x0_min_grid: np.ndarray,
-    x0_max_grid: np.ndarray,
-    nx_grid: Union[int, np.ndarray],
+    x0_min: np.ndarray,
+    x0_max: np.ndarray,
+    n_xgrid: Union[int, np.ndarray],
     n_jobs: int = -1,
     projection_config: Dict[int, Projection] = None,
 ) -> ResultFtleMethods:
@@ -433,13 +425,13 @@ def ftl_variational_equations(
         Flujo del cual se calcula los ftle.
     t: Union[int, float]
         Valor del tiempo.
-    x0_min_grid: np.ndarray
+    x0_min: np.ndarray
         Array de dimensión (n_variables,) que indica el valor inferior
         de la malla.
-    x0_max_grid: np.ndarray
+    x0_max: np.ndarray
         Array de dimensión (n_variables,) que indica el valor superior
         de la malla.
-    nx_grid: Union[int, Sequence[int]]
+    n_xgrid: Union[int, Sequence[int]]
         Número de puntos generados por variable, donde el número
         total de puntos será nx_grid^(n_variables.). Si pasamos
         un entero se aplicará a todas las dimensiones. Si es una
@@ -453,22 +445,22 @@ def ftl_variational_equations(
     -------
     result: ResultFtleMethods
     """
-    n_var = x0_max_grid.size
-    if x0_min_grid.shape != x0_max_grid.shape:
+    n_var = x0_max.size
+    if x0_min.shape != x0_max.shape:
         raise DoesntCoincideDimension(
             "La dimensión de x0_min_grid y x0_max_grid" " deben ser iguales."
         )
-    if isinstance(nx_grid, int):
-        nx_grid = np.ones(n_var).astype(int) * nx_grid
+    if isinstance(n_xgrid, int):
+        n_xgrid = np.ones(n_var).astype(int) * n_xgrid
 
-    x_min_grid = np.concatenate((x0_min_grid, np.eye(n_var).reshape(n_var**2)))
-    x_max_grid = np.concatenate((x0_max_grid, np.eye(n_var).reshape(n_var**2)))
-    nx_grid = np.concatenate((nx_grid, np.ones(n_var**2))).astype(int)
+    x_min_grid = np.concatenate((x0_min, np.eye(n_var).reshape(n_var**2)))
+    x_max_grid = np.concatenate((x0_max, np.eye(n_var).reshape(n_var**2)))
+    n_xgrid = np.concatenate((n_xgrid, np.ones(n_var**2))).astype(int)
     grid_points, flow_points = flow.flow_grid(
         t=t,
-        x0_min_grid=x_min_grid,
-        x0_max_grid=x_max_grid,
-        nx_grid=nx_grid,
+        x0_min=x_min_grid,
+        x0_max=x_max_grid,
+        n_xgrid=n_xgrid,
         n_jobs=n_jobs,
         projection_config=projection_config,
     )

@@ -4,7 +4,7 @@ import numpy as np
 import pytest
 
 from dynamic_indicators_tools.differentials_systems.diff_system import DiffSystem, DiffVariable
-from dynamic_indicators_tools.dynamic_indicators.lagrangian_descriptors import (
+from dynamic_indicators_tools.dynamic_indicators.lagrangian_descriptors.ld_utils import (
     integrate_func_diff_system,
 )
 from dynamic_indicators_tools.numercial_methods.integrators import DoesntExistIntegrator

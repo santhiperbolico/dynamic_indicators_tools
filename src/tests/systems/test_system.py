@@ -1,4 +1,4 @@
-from typing import Sequence
+from typing import Sequence, Union
 
 import numpy as np
 
@@ -48,6 +48,14 @@ def poincare_map_function(x: np.ndarray):
     return x[1] - x[0]
 
 
-def poincare_initial_conditions_function(x_min: np.ndarray, x_max: np.ndarray, n_points: int):
+def poincare_initial_conditions_function(
+    x_min: Union[Sequence[float], np.ndarray],
+    x_max: Union[Sequence[float], np.ndarray],
+    n_points: int,
+):
+    if isinstance(x_min, list):
+        x_min = np.array(x_min)
+    if isinstance(x_max, list):
+        x_max = np.array(x_max)
     steps = np.linspace(0, 1, n_points)
-    return (x_max - x_min) * steps + x_min
+    return [(x_max - x_min) * step + x_min for step in steps]

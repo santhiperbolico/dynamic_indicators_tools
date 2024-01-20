@@ -128,9 +128,9 @@ def integrate_func_diff_system(
 def lagrangian_descriptors(
     diff_system: DiffSystem,
     t: Union[int, float],
-    x0_min_grid: np.ndarray,
-    x0_max_grid: np.ndarray,
-    n_grid_x: Union[int, np.ndarray],
+    x0_min: np.ndarray,
+    x0_max: np.ndarray,
+    n_xgrid: Union[int, np.ndarray],
     tau: Union[float, int, Tuple[float, float]],
     method_integrate: str,
     params_solver: Dict[str, Any] = None,
@@ -150,13 +150,13 @@ def lagrangian_descriptors(
         Sistema diferencial para integrar.
     t: Union[int, float]
         Valor del tiempo.
-    x0_min_grid: np.ndarray
+    x0_min: np.ndarray
         Array de dimensión (n_variables,) que indica el valor inferior
         de la malla.
-    x0_max_grid: np.ndarray
+    x0_max: np.ndarray
         Array de dimensión (n_variables,) que indica el valor superior
         de la malla.
-    n_grid_x: Union[int, np.ndarray]
+    n_xgrid: Union[int, np.ndarray]
         Número de puntos generados por variable, donde el número
         total de puntos será nx_grid^(n_variables.).  Si pasamos
         un entero se aplicará a todas las dimensiones. Si es una
@@ -184,14 +184,14 @@ def lagrangian_descriptors(
     -------
     result: ResultLDMethods
     """
-    n_var = x0_max_grid.size
-    if isinstance(n_grid_x, int):
-        n_grid_x = np.ones(n_var).astype(int) * n_grid_x
-    if x0_min_grid.size != n_var:
+    n_var = x0_max.size
+    if isinstance(n_xgrid, int):
+        n_xgrid = np.ones(n_var).astype(int) * n_xgrid
+    if x0_min.size != n_var:
         raise DoesntCoincideDimension(
             "La dimensión de x0_min_grid y x0_max_grid" " deben ser iguales."
         )
-    if n_grid_x.size != n_var:
+    if n_xgrid.size != n_var:
         raise DoesntCoincideDimension(
             "La dimensión de nx_grid no coincide con el número de variables."
         )
@@ -200,24 +200,24 @@ def lagrangian_descriptors(
         return _lagrangian_descriptors_non_paralelizable(
             diff_system=diff_system,
             t=t,
-            x0_min_grid=x0_min_grid,
-            x0_max_grid=x0_max_grid,
-            nx_grid=n_grid_x,
+            x0_min=x0_min,
+            x0_max=x0_max,
+            n_xgrid=n_xgrid,
             tau=tau,
-            params_solver=params_solver,
             method_integrate=method_integrate,
+            params_solver=params_solver,
             opts_integrate=opts_integrate,
             projection_config=projection_config,
         )
     return _lagrangian_descriptors_paralelizable(
         diff_system=diff_system,
         t=t,
-        x0_min_grid=x0_min_grid,
-        x0_max_grid=x0_max_grid,
-        nx_grid=n_grid_x,
+        x0_min=x0_min,
+        x0_max=x0_max,
+        n_xgrid=n_xgrid,
         tau=tau,
-        params_solver=params_solver,
         method_integrate=method_integrate,
+        params_solver=params_solver,
         opts_integrate=opts_integrate,
         n_jobs=n_jobs,
         projection_config=projection_config,
@@ -227,9 +227,9 @@ def lagrangian_descriptors(
 def _lagrangian_descriptors_non_paralelizable(
     diff_system: DiffSystem,
     t: Union[int, float],
-    x0_min_grid: np.ndarray,
-    x0_max_grid: np.ndarray,
-    nx_grid: np.ndarray,
+    x0_min: np.ndarray,
+    x0_max: np.ndarray,
+    n_xgrid: np.ndarray,
     tau: Union[float, int, Tuple[float, float]],
     method_integrate: str,
     params_solver: Dict[str, Any] = None,
@@ -245,13 +245,13 @@ def _lagrangian_descriptors_non_paralelizable(
         Sistema diferencial para integrar.
     t: Union[int, float]
         Valor del tiempo.
-    x0_min_grid: np.ndarray
+    x0_min: np.ndarray
         Array de dimensión (n_variables,) que indica el valor inferior
         de la malla.
-    x0_max_grid: np.ndarray
+    x0_max: np.ndarray
         Array de dimensión (n_variables,) que indica el valor superior
         de la malla.
-    nx_grid: np.ndarray
+    n_xgrid: np.ndarray
         Array con el número de puntos generados por variable.
     method_integrate: str, default "quad"
         Nombre del método de integración utilizado.
@@ -270,9 +270,9 @@ def _lagrangian_descriptors_non_paralelizable(
     -------
     result: ResultLDMethods
     """
-    n_var = x0_max_grid.size
+    n_var = x0_max.size
     grid_points = np.meshgrid(
-        *[np.linspace(x0_min_grid[i], x0_max_grid[i], nx_grid[i]) for i in range(n_var)]
+        *[np.linspace(x0_min[i], x0_max[i], n_xgrid[i]) for i in range(n_var)]
     )
     grid_points = project_grid_data(grid_points, projection_config)
     lag_grid = np.zeros(grid_points[0].shape)
@@ -296,9 +296,9 @@ def _lagrangian_descriptors_non_paralelizable(
 def _lagrangian_descriptors_paralelizable(
     diff_system: DiffSystem,
     t: Union[int, float],
-    x0_min_grid: np.ndarray,
-    x0_max_grid: np.ndarray,
-    nx_grid: np.ndarray,
+    x0_min: np.ndarray,
+    x0_max: np.ndarray,
+    n_xgrid: np.ndarray,
     tau: Union[float, int, Tuple[float, float]],
     method_integrate: str,
     params_solver: Dict[str, Any] = None,
@@ -315,13 +315,13 @@ def _lagrangian_descriptors_paralelizable(
         Sistema diferencial para integrar.
     t: Union[int, float]
         Valor del tiempo.
-    x0_min_grid: np.ndarray
+    x0_min: np.ndarray
         Array de dimensión (n_variables,) que indica el valor inferior
         de la malla.
-    x0_max_grid: np.ndarray
+    x0_max: np.ndarray
         Array de dimensión (n_variables,) que indica el valor superior
         de la malla.
-    nx_grid: np.ndarray
+    n_xgrid: np.ndarray
          Array con el número de puntos generados por variable.
     method_integrate: str, default "quad"
         Nombre del método de integración utilizado.
@@ -342,9 +342,9 @@ def _lagrangian_descriptors_paralelizable(
     -------
     result: ResultLDMethods
     """
-    n_var = x0_max_grid.size
+    n_var = x0_max.size
     grid_points = np.meshgrid(
-        *[np.linspace(x0_min_grid[i], x0_max_grid[i], nx_grid[i]) for i in range(n_var)]
+        *[np.linspace(x0_min[i], x0_max[i], n_xgrid[i]) for i in range(n_var)]
     )
     grid_points = project_grid_data(grid_points, projection_config)
     lag_grid = np.zeros(grid_points[0].shape)

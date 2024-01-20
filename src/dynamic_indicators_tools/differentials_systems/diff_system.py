@@ -294,9 +294,9 @@ class FlowMap:
     def flow_grid(
         self,
         t: Union[int, float],
-        x0_min_grid: np.ndarray,
-        x0_max_grid: np.ndarray,
-        nx_grid: Union[int, np.ndarray],
+        x0_min: np.ndarray,
+        x0_max: np.ndarray,
+        n_xgrid: Union[int, np.ndarray],
         n_jobs: int = 1,
         projection_config: Dict[int, Projection] = None,
     ) -> Tuple[Union[Sequence[np.ndarray], str], np.ndarray]:
@@ -310,13 +310,13 @@ class FlowMap:
         ----------
         t: Union[int, float]
             Valor del tiempo.
-        x0_min_grid: np.ndarray
+        x0_min: np.ndarray
             Array de dimensión (n_variables,) que indica el valor inferior
             de la malla.
-        x0_max_grid: np.ndarray
+        x0_max: np.ndarray
             Array de dimensión (n_variables,) que indica el valor superior
             de la malla.
-        nx_grid: Union[int, np.ndarray]
+        n_xgrid: Union[int, np.ndarray]
             Número de puntos generados por variable, donde el número
             total de puntos será nx_grid^(n_variables.). Si pasamos
             un entero se aplicará a todas las dimensiones. Si es una
@@ -335,19 +335,19 @@ class FlowMap:
             Array con el valor del flujo para cada punto de la malla. Este
             array es de dimensión (nx_grid,..., <n_variables>, ...,nx_grid, n_variables).
         """
-        n_var = x0_max_grid.size
-        if isinstance(nx_grid, int):
-            nx_grid = np.ones(n_var).astype(int) * nx_grid
-        if x0_min_grid.shape != x0_max_grid.shape:
+        n_var = x0_max.size
+        if isinstance(n_xgrid, int):
+            n_xgrid = np.ones(n_var).astype(int) * n_xgrid
+        if x0_min.shape != x0_max.shape:
             raise DoesntCoincideDimension(
                 "La dimensión de x0_min_grid y x0_max_grid" " deben ser iguales."
             )
-        if nx_grid.size != n_var:
+        if n_xgrid.size != n_var:
             raise DoesntCoincideDimension(
                 "La dimensión de nx_grid no coincide con el número de variables."
             )
         grid_points = np.meshgrid(
-            *[np.linspace(x0_min_grid[i], x0_max_grid[i], nx_grid[i]) for i in range(n_var)]
+            *[np.linspace(x0_min[i], x0_max[i], n_xgrid[i]) for i in range(n_var)]
         )
         grid_points = project_grid_data(grid_points, projection_config)
         flow = np.zeros(grid_points[0].shape + (n_var,))
