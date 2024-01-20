@@ -1,13 +1,14 @@
+import json
+import os
+
 import pytest
 
 from dynamic_indicators_tools.dynamic_indicators.dynamic_indicators_utils import (
     DynamicIndicatorNotExist,
     FtleElementWise,
     FtleGrid,
+    LagrangianDescriptor,
     get_dynamic_indicator,
-)
-from dynamic_indicators_tools.main_dynamic_indicators_process import (
-    multi_process_dynamic_indicators,
 )
 
 
@@ -19,9 +20,9 @@ def config_main_test():
 @pytest.mark.parametrize(
     "di_method, expected",
     [
-        ("ftle_element_wise", FtleElementWise),
-        ("ftle_grid", FtleGrid),
-        # ("lagrangian_descriptors", LagrangianDescriptor),
+        (FtleElementWise.name_dynamic_indicator, FtleElementWise),
+        (FtleGrid.name_dynamic_indicator, FtleGrid),
+        (LagrangianDescriptor.name_dynamic_indicator, LagrangianDescriptor),
         # ("poincare_section", PoincareSections),
     ],
 )
@@ -35,6 +36,19 @@ def test_get_dynamic_indicator_error():
         _ = get_dynamic_indicator("fail_method")
 
 
-def test_main_system_process(config_main_test):
-    multi_process_dynamic_indicators(config_main_test)
-    assert True
+def test_main_process(config_main_test):
+    with open(config_main_test, "r") as file_json:
+        params = json.load(file_json)
+    dynamic_indicators = params.copy()
+    system_params = dynamic_indicators.pop("system_params")
+    path = system_params.get("path")
+    if os.path.exists(path):
+        for file_path in os.scandir(path):
+            os.remove(file_path)
+    for dynamic_indicator_name, dynamic_indicator_params in dynamic_indicators.items():
+        dynamic_indicator_object = get_dynamic_indicator(dynamic_indicator_name)
+        dynamic_indicator_object.process(params)
+        params_processor = dynamic_indicator_object.create_params_processor(params)
+        fname = dynamic_indicator_object.create_file_name_process(params_processor)
+        filename = os.path.join(path, fname + ".png")
+        assert os.path.exists(filename) or not params_processor.get_param("execute")

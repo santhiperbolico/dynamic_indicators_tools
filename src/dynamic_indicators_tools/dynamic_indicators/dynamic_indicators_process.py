@@ -4,6 +4,7 @@ from typing import Any, Dict
 
 from attr import attrs
 
+from dynamic_indicators_tools.config_files.params_methods import ParamProcessor
 from dynamic_indicators_tools.differentials_systems.diff_system import (
     DiffSystem,
     DiffVariable,
@@ -40,6 +41,17 @@ def create_system(system_params: Dict[str, Any]) -> FlowMap:
 
 @attrs
 class DynamicIndicator(ABC):
+    @abstractmethod
+    def create_params_processor(self, params: Dict[str, Any]) -> ParamProcessor:
+        """
+        Método que genera el param procesor asociado al indicador.
+        """
+        pass
+
+    @abstractmethod
+    def create_file_name_process(self, params_processor: ParamProcessor) -> str:
+        pass
+
     @abstractmethod
     def process(self, params: Dict[str, Any]) -> None:
         """

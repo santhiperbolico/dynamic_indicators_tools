@@ -1,13 +1,13 @@
 import logging
 import os
-from typing import Any, Dict
+from typing import Any, Dict, List
 
 import numpy as np
 from attr import attrs
 
 from .ftle_params import FTLE_ELEMENT_WISE_PARAMS, FTLE_GRID_PARAMS, FTLE_VARIATIONAL_EQUATIONS
 from .ftle_utils import ftl_variational_equations, ftle_element_wise, ftle_grid
-from dynamic_indicators_tools.config_files.params_methods import ParamProcessor, ParamType
+from dynamic_indicators_tools.config_files.params_methods import Param, ParamProcessor, ParamType
 from dynamic_indicators_tools.dynamic_indicators.dynamic_indicators_process import (
     DynamicIndicator,
     create_system,
@@ -22,8 +22,8 @@ class FtleElementWise(DynamicIndicator):
     Lyapunov en tiempos finitos calculado elemento a elemento.
     """
 
-    name_dynamic_indicator = "ftle_element_wise"
-    default_params = FTLE_ELEMENT_WISE_PARAMS
+    name_dynamic_indicator: str = "ftle_element_wise"
+    default_params: List[Param] = FTLE_ELEMENT_WISE_PARAMS
 
     def create_params_processor(self, params: Dict[str, Any] = None) -> ParamProcessor:
         """
@@ -133,7 +133,7 @@ class FtleElementWise(DynamicIndicator):
         params: Dict[str, Any]
             Parámetros del indicador dinámico.
         """
-        execute = params.get("system_params", {}).get("execute", False)
+        execute = params.get(self.name_dynamic_indicator, {}).get("execute", False)
         if execute:
             logging.info(f"Ejecutando {self.name_dynamic_indicator}")
             params_processor = self.load_params(params)
@@ -164,8 +164,8 @@ class FtleGrid(DynamicIndicator):
     Lyapunov en tiempos finitos calculado en malla.
     """
 
-    name_dynamic_indicator = "ftle_grid"
-    default_params = FTLE_GRID_PARAMS
+    name_dynamic_indicator: str = "ftle_grid"
+    default_params: List[Param] = FTLE_GRID_PARAMS
 
     def create_params_processor(self, params: Dict[str, Any] = None) -> ParamProcessor:
         """
@@ -244,7 +244,9 @@ class FtleGrid(DynamicIndicator):
         n_xgrid_total = np.prod(n_xgrid) if isinstance(n_xgrid, np.ndarray) else n_xgrid
         system_name = params_processor.get_param("system_name")
         t = params_processor.get_param("t")
-        fname = f"{system_name}_grid_t_{t:.0f}_nx_grid_{n_xgrid_total:.0f}.png"
+        fname = (
+            f"{system_name}_{self.name_dynamic_indicator}_t_{t:.0f}_nx_grid_{n_xgrid_total:.0f}"
+        )
         return fname
 
     def process(self, params: Dict[str, Any]) -> None:
@@ -258,7 +260,7 @@ class FtleGrid(DynamicIndicator):
         params: Dict[str, Any]
             Parámetros del indicador dinámico.
         """
-        execute = params.get("system_params", {}).get("execute", False)
+        execute = params.get(self.name_dynamic_indicator, {}).get("execute", False)
         if execute:
             logging.info(f"Ejecutando {self.name_dynamic_indicator}")
             params_processor = self.load_params(params)
@@ -290,8 +292,8 @@ class FtleVariationalEquations(DynamicIndicator):
     de las ecuaciones diferenciales variacionales.
     """
 
-    name_dynamic_indicator = "ftle_variational_equations"
-    default_params = FTLE_VARIATIONAL_EQUATIONS
+    name_dynamic_indicator: str = "ftle_variational_equations"
+    default_params: List[Param] = FTLE_VARIATIONAL_EQUATIONS
 
     def create_params_processor(self, params: Dict[str, Any] = None) -> ParamProcessor:
         """
@@ -313,6 +315,8 @@ class FtleVariationalEquations(DynamicIndicator):
             params = {}
         params_indicator.update(params.get("system_params"))
         params_indicator.update(params.get(self.name_dynamic_indicator, {}))
+        if "var_system" in params.keys():
+            params_indicator.update({"function": params_indicator.get("var_system")})
         params_processor = ParamProcessor(self.default_params, params_indicator)
         return params_processor
 
@@ -370,7 +374,9 @@ class FtleVariationalEquations(DynamicIndicator):
         n_xgrid_total = np.prod(n_xgrid) if isinstance(n_xgrid, np.ndarray) else n_xgrid
         system_name = params_processor.get_param("system_name")
         t = params_processor.get_param("t")
-        fname = f"{system_name}_grid_t_{t:.0f}_nx_grid_{n_xgrid_total:.0f}.png"
+        fname = (
+            f"{system_name}_{self.name_dynamic_indicator}_t_{t:.0f}_nx_grid_{n_xgrid_total:.0f}"
+        )
         return fname
 
     def process(self, params: Dict[str, Any]) -> None:
@@ -385,7 +391,7 @@ class FtleVariationalEquations(DynamicIndicator):
         params: Dict[str, Any]
             Parámetros del indicador dinámico.
         """
-        execute = params.get("system_params", {}).get("execute", False)
+        execute = params.get(self.name_dynamic_indicator, {}).get("execute", False)
         if execute:
             logging.info(f"Ejecutando {self.name_dynamic_indicator}")
             params_processor = self.load_params(params)

@@ -70,5 +70,5 @@ FTLE_VARIATIONAL_EQUATIONS = GENERALS_PARAMS + [
     Param("x0_max", ParamType.INDICATOR, format_function=format_bounds_variables),
     Param("n_xgrid", ParamType.INDICATOR, 200),
     Param("n_jobs", ParamType.INDICATOR, 1),
-    Param("var_system", ParamType.INDICATOR, format_function=import_string),
+    Param("var_system", ParamType.SYSTEM, format_function=import_string),
 ]
