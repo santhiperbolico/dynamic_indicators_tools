@@ -2,7 +2,7 @@ import numpy as np
 import pytest
 
 from dynamic_indicators_tools.differentials_systems.diff_system import DiffSystem, DiffVariable
-from dynamic_indicators_tools.dynamic_indicators.poincare_maps import (
+from dynamic_indicators_tools.dynamic_indicators.poincare_maps.poincare_utils import (
     PoincareMapFunction,
     get_poincare_grid_method,
 )

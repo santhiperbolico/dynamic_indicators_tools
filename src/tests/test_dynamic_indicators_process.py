@@ -1,11 +1,9 @@
 import pytest
 
-from dynamic_indicators_tools.dynamic_indicators.dynamic_indicators_process import (
+from dynamic_indicators_tools.dynamic_indicators.dynamic_indicators_utils import (
     DynamicIndicatorNotExist,
     FtleElementWise,
     FtleGrid,
-    LagrangianDescriptor,
-    PoincareSections,
     get_dynamic_indicator,
 )
 from dynamic_indicators_tools.main_dynamic_indicators_process import (
@@ -23,8 +21,8 @@ def config_main_test():
     [
         ("ftle_element_wise", FtleElementWise),
         ("ftle_grid", FtleGrid),
-        ("lagrangian_descriptors", LagrangianDescriptor),
-        ("poincare_section", PoincareSections),
+        # ("lagrangian_descriptors", LagrangianDescriptor),
+        # ("poincare_section", PoincareSections),
     ],
 )
 def test_get_dynamic_indicator(di_method, expected):

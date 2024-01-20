@@ -8,7 +8,7 @@ from dynamic_indicators_tools.differentials_systems.diff_system import (
     DiffVariable,
     FlowMap,
 )
-from dynamic_indicators_tools.dynamic_indicators.finite_time_lyapunov_exponents import (
+from dynamic_indicators_tools.dynamic_indicators.finite_time_lyapunov_exponents.ftle_utils import (
     diff_flow_grid,
     ftl_variational_equations,
     ftle_element_wise,
@@ -107,12 +107,7 @@ def test_diff_flow(dimension: int, nx_grid: int):
     x_min_grid = np.array([0] * dimension)
     x_max_grid = np.array([10] * dimension)
     grid_points, diff_f = diff_flow_grid(
-        flow=flow_x,
-        t=t,
-        x0_min_grid=x_min_grid,
-        x0_max_grid=x_max_grid,
-        nx_grid=nx_grid,
-        n_jobs=n_jobs,
+        flow=flow_x, t=t, x0_min=x_min_grid, x0_max=x_max_grid, n_xgrid=nx_grid, n_jobs=n_jobs
     )
     for i in range(len(diff_f)):
         dfxi = diff_f[i]
