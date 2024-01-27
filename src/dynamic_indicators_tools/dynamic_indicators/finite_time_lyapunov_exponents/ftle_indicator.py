@@ -319,7 +319,7 @@ class FtleVariationalEquations(DynamicIndicator):
             params = {}
         params_indicator.update(params.get("system_params"))
         params_indicator.update(params.get(self.name_dynamic_indicator, {}))
-        if "var_system" in params.keys():
+        if "var_system" in params_indicator.keys():
             params_indicator.update({"function": params_indicator.get("var_system")})
         params_processor = ParamProcessor(self.default_params, params_indicator)
         return params_processor
