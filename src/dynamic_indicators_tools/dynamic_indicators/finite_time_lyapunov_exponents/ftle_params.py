@@ -54,6 +54,7 @@ FTLE_ELEMENT_WISE_PARAMS = GENERALS_PARAMS + [
     Param("h_steps", ParamType.INDICATOR, None),
     Param("params_t_close", ParamType.INDICATOR, {"t_close": False}, format_params_t_close),
     Param("projection_config", ParamType.INDICATOR, {}, format_system_projections),
+    Param("params_solver", ParamType.SYSTEM, {}),
 ]
 
 FTLE_GRID_PARAMS = GENERALS_PARAMS + [
@@ -63,6 +64,7 @@ FTLE_GRID_PARAMS = GENERALS_PARAMS + [
     Param("n_xgrid", ParamType.INDICATOR, 200, format_function=format_n_xgrid),
     Param("n_jobs", ParamType.INDICATOR, 1),
     Param("projection_config", ParamType.INDICATOR, {}, format_system_projections),
+    Param("params_solver", ParamType.SYSTEM, {}),
 ]
 
 FTLE_VARIATIONAL_EQUATIONS = GENERALS_PARAMS + [
@@ -72,4 +74,6 @@ FTLE_VARIATIONAL_EQUATIONS = GENERALS_PARAMS + [
     Param("n_xgrid", ParamType.INDICATOR, 200, format_function=format_n_xgrid),
     Param("n_jobs", ParamType.INDICATOR, 1),
     Param("var_system", ParamType.SYSTEM, format_function=import_string),
+    Param("projection_config", ParamType.INDICATOR, {}, format_system_projections),
+    Param("params_solver", ParamType.SYSTEM, {}),
 ]

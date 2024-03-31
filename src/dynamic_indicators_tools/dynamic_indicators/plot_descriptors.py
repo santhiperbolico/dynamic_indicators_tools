@@ -143,7 +143,7 @@ def plot_poincare_sections(
     for i, var in enumerate(values):
         x = var[:, axis[0]]
         y = var[:, axis[1]]
-        plt.scatter(x, y)
+        plt.scatter(x, y, s=3)
     plt.xlabel(f"x{axis[0]}-values")
     plt.ylabel(f"x{axis[1]}-values")
     plt.savefig(filename)
