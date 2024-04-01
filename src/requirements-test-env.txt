@@ -1,0 +1,2 @@
+dynamic-indicators-tools>=0.1.1
+jupyter>=1.0.0

@@ -1,4 +1,4 @@
-from typing import Any, Callable, Sequence, Tuple, Union
+from typing import Any, Callable, List, Sequence, Tuple, Union
 
 import matplotlib.pyplot as plt
 import numpy as np
@@ -121,3 +121,30 @@ def plot_extremals_solutions(
     ax.set_xlim(left=x_min[0], right=x_max[0])
     ax.set_ylim(bottom=x_min[1], top=x_max[1])
     return ax
+
+
+def plot_poincare_sections(
+    values: Union[np.ndarray, List[np.ndarray]],
+    title_map: str = None,
+    filename: str = None,
+    axis: Tuple[int, int] = None,
+) -> plt.Figure:
+    if isinstance(values, np.ndarray):
+        values = [values]
+    if axis is None:
+        axis = (0, 1)
+
+    title = ""
+    if isinstance(filename, str):
+        title = filename.split("/")[-1].split(".")[0]
+    title = title_map or title
+    fig = plt.figure()
+    plt.title(title)
+    for i, var in enumerate(values):
+        x = var[:, axis[0]]
+        y = var[:, axis[1]]
+        plt.scatter(x, y, s=3)
+    plt.xlabel(f"x{axis[0]}-values")
+    plt.ylabel(f"x{axis[1]}-values")
+    plt.savefig(filename)
+    return fig
