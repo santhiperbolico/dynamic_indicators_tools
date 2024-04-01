@@ -31,11 +31,14 @@ def create_system(system_params: Dict[str, Any]) -> FlowMap:
     args_system = system_params.get("args_system")
     t0 = system_params.get("t0")
     solver_method = system_params.get("solver_method")
+    params_solver = system_params.get("params_solver", {})
 
     logging.info("\t - Creando el sistema %s" % system_name)
     x = DiffVariable("x")
     flow_map = FlowMap(diff_system=DiffSystem(x, function_system), t0=t0)
-    flow_map.set_params_fun_solver(solver_method=solver_method, args_func=args_system)
+    flow_map.set_params_fun_solver(
+        solver_method=solver_method, args_func=args_system, params_solver=params_solver
+    )
     return flow_map
 
 

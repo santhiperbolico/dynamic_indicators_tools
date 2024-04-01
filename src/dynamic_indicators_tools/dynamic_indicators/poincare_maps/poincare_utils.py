@@ -1,3 +1,4 @@
+import logging
 from abc import ABC, abstractmethod
 from typing import Any, Callable, Dict, List, Sequence, Tuple, Union
 
@@ -11,7 +12,7 @@ PoincareMapFunction = Callable[[Union[float, np.ndarray]], Union[float, np.ndarr
 
 
 def poincare_section_generator(
-    diff_var: DiffVariable, poincare_map: PoincareMapFunction
+    diff_var: DiffVariable, poincare_map: PoincareMapFunction, pm_args: Sequence[Any] = None
 ) -> PoincareMapFunction:
     """
     Función que genera la función de la sección de poincaré compuesta de la interpolación
@@ -34,9 +35,11 @@ def poincare_section_generator(
         de Poincaré original.
 
     """
+    if pm_args is None:
+        pm_args = ()
 
     def init(t: Union[float, np.ndarray]) -> Union[float, np.ndarray]:
-        return poincare_map(diff_var.solution(t))
+        return poincare_map(diff_var.solution(t), *pm_args)
 
     return init
 
@@ -144,6 +147,7 @@ class PoincareSectionInterpolate(PoincareSectionGrid):
         x0: np.ndarray,
         n_points: int = 100,
         args: Sequence[Any] = None,
+        pm_args: Sequence[Any] = None,
         params_solver: Dict[str, Any] = None,
         params_root: Dict[str, Any] = None,
     ) -> Tuple[np.ndarray, np.ndarray]:
@@ -190,18 +194,33 @@ class PoincareSectionInterpolate(PoincareSectionGrid):
         values__roots: np.ndarray
             Valores de la solución en los tiempos de t_roots.
         """
+        default_params_root = {"method": "bisect"}
         if params_root is None:
-            params_root = {"method": "bisect"}
+            params_root = {}
 
-        _, _ = diff_system.solve_function(solver_method, t_span, x0, args, params_solver)
-        poincare_section = poincare_section_generator(diff_system.variable, poincare_map)
+        if params_solver is None:
+            params_solver = {}
+
+        default_params_root.update(params_root)
+        params_general_solver = params_solver.copy()
         t_values = np.linspace(t_span[0], t_span[1], n_points)
+        params_general_solver.update({"t_eval": t_values})
+        _, _ = diff_system.solve_function(solver_method, t_span, x0, args, params_general_solver)
+        poincare_section = poincare_section_generator(diff_system.variable, poincare_map, pm_args)
+
         t_roots = []
-        for i in range(n_points - 1):
+        mask_values = np.ones(t_values.size).astype(bool)
+        sign_values = np.sign(poincare_section(t_values))
+        mask_values[1:] = (sign_values[1:] + sign_values[:-1]) == 0
+        t_values = t_values[mask_values]
+
+        logging.info(f"Se han encontrado {t_values.size} puntos con cambios de signo.")
+
+        for i in range(t_values.size - 1):
             root = None
             try:
-                params_root.update({"bracket": [t_values[i], t_values[i + 1]]})
-                root_result = root_scalar(poincare_section, **params_root)
+                default_params_root.update({"bracket": [t_values[i], t_values[i + 1]]})
+                root_result = root_scalar(poincare_section, **default_params_root)
                 converged = root_result.converged
                 root = root_result.root
             except ValueError:
@@ -271,6 +290,7 @@ class PoincareSectionOdeTimeRange(PoincareSectionGrid):
         x0: np.ndarray,
         n_points: int = 100,
         args: Sequence[Any] = None,
+        pm_args: Sequence[Any] = None,
         params_solver: Dict[str, Any] = None,
         params_root: Dict[str, Any] = None,
     ) -> Tuple[np.ndarray, np.ndarray]:
@@ -318,8 +338,10 @@ class PoincareSectionOdeTimeRange(PoincareSectionGrid):
         values__roots: np.ndarray
             Valores de la solución en los tiempos de t_roots.
         """
+        default_params_root = {"method": "bisect"}
         if params_root is None:
-            params_root = {"method": "bisect"}
+            params_root = {}
+        default_params_root.update(params_root)
 
         if params_solver is None:
             params_solver = {}
@@ -333,6 +355,18 @@ class PoincareSectionOdeTimeRange(PoincareSectionGrid):
         )
         t_roots = []
         values_roots = []
+        poincare_section = poincare_section_generator(diff_system.variable, poincare_map, pm_args)
+        mask_values = np.ones(t_values.size).astype(bool)
+        sign_values = np.sign(poincare_section(t_values))
+        mask_values[1:] = (sign_values[1:] + sign_values[:-1]) == 0
+        t_values = t_values[mask_values]
+        t_values[-1] = t_span[1]
+        last_x0 = x0_array[-1, :].copy()
+        x0_array = x0_array[mask_values, :]
+        x0_array[-1, :] = last_x0
+
+        logging.info(f"Se han encontrado {t_values.size} puntos con cambios de signo.")
+
         for i in range(t_values.size - 1):
             t_span_iteration = [float(t_values[i]), float(t_values[i + 1])]
             x0_iteration = x0_array[i, :]
@@ -343,10 +377,12 @@ class PoincareSectionOdeTimeRange(PoincareSectionGrid):
                 args=args,
                 params_solver=params_solver,
             )
-            poincare_section = poincare_section_generator(diff_system.variable, poincare_map)
-            params_root.update({"bracket": [t_values[i], t_values[i + 1]]})
+            poincare_section = poincare_section_generator(
+                diff_system.variable, poincare_map, pm_args
+            )
+            default_params_root.update({"bracket": [t_values[i], t_values[i + 1]]})
             try:
-                root_result = root_scalar(poincare_section, **params_root)
+                root_result = root_scalar(poincare_section, **default_params_root)
                 converged = root_result.converged
                 root = root_result.root
             except ValueError:
@@ -390,21 +426,16 @@ class PoincareSectionOdeTimeRange(PoincareSectionGrid):
         t0_roots_list = []
         values_roots_list = []
         if isinstance(x0_grid, list):
-            for x0 in x0_grid:
-                t0_roots, values_roots = PoincareSectionOdeTimeRange.get_poincare_points(
-                    x0=x0, **kwargs
-                )
-                t0_roots_list.append(t0_roots)
-                values_roots_list.append(values_roots)
-            return t0_roots_list, values_roots_list
+            x0_grid = np.array(x0_grid)
 
         for i in range(x0_grid.shape[0]):
             x0 = x0_grid[i, :]
             t0_roots, values_roots = PoincareSectionOdeTimeRange.get_poincare_points(
                 x0=x0, **kwargs
             )
-            t0_roots_list.append(t0_roots)
-            values_roots_list.append(values_roots)
+            if t0_roots.size > 0:
+                t0_roots_list.append(t0_roots)
+                values_roots_list.append(values_roots)
         return t0_roots_list, values_roots_list
 
 

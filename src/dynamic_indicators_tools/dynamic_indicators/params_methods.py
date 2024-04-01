@@ -319,6 +319,12 @@ def format_axis_system(axis: Sequence[int] = None) -> tuple:
     raise ValueError("El elemento axis debe de tener una dimensión de dos elementos,")
 
 
+def format_n_xgrid(n_xgrid: Union[int, list]) -> Union[int, np.ndarray]:
+    if isinstance(n_xgrid, list):
+        return np.array(n_xgrid)
+    return n_xgrid
+
+
 GENERALS_PARAMS = [
     Param("function", ParamType.SYSTEM, format_function=format_system_function),
     Param("path", ParamType.SYSTEM, default_value="."),

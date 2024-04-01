@@ -1,4 +1,5 @@
 import logging
+import os.path
 from typing import Any, Dict
 from warnings import warn
 
@@ -70,7 +71,10 @@ def main_process_di(params: Dict[str, Any]) -> None:
         por defecto lo toma como False.
     """
     dynamic_indicators = params.copy()
-    _ = dynamic_indicators.pop("system_params")
+    system_params = dynamic_indicators.pop("system_params")
+    path_system = system_params.get("path", ".")
+    if not os.path.exists(path_system):
+        os.mkdir(path_system)
     for dynamic_indicator_name, dynamic_indicator_params in dynamic_indicators.items():
         try:
             dynamic_indicator_object = get_dynamic_indicator(dynamic_indicator_name)
