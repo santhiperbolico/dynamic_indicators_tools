@@ -5,7 +5,7 @@ with open("README.md", "r") as fh:
 
 setuptools.setup(
     name="dynamic_indicators_tools",
-    version="1.0.0rc4",
+    version="1.0.1",
     author="Santiago Arranz Sanz",
     description="Repositorio que recoge herramientas para el análisis de sistemas dinámicos",
     long_description=long_description,
