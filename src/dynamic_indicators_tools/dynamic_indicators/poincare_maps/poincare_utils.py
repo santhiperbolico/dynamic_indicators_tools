@@ -197,6 +197,10 @@ class PoincareSectionInterpolate(PoincareSectionGrid):
         default_params_root = {"method": "bisect"}
         if params_root is None:
             params_root = {}
+
+        if params_solver is None:
+            params_solver = {}
+
         default_params_root.update(params_root)
         params_general_solver = params_solver.copy()
         t_values = np.linspace(t_span[0], t_span[1], n_points)
@@ -356,6 +360,11 @@ class PoincareSectionOdeTimeRange(PoincareSectionGrid):
         sign_values = np.sign(poincare_section(t_values))
         mask_values[1:] = (sign_values[1:] + sign_values[:-1]) == 0
         t_values = t_values[mask_values]
+        t_values[-1] = t_span[1]
+        last_x0 = x0_array[-1, :].copy()
+        x0_array = x0_array[mask_values, :]
+        x0_array[-1, :] = last_x0
+
         logging.info(f"Se han encontrado {t_values.size} puntos con cambios de signo.")
 
         for i in range(t_values.size - 1):
