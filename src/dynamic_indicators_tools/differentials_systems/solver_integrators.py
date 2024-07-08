@@ -1,4 +1,4 @@
-from typing import Any, Callable, Dict, NamedTuple, Sequence
+from typing import Any, Callable, Dict, List, NamedTuple, Sequence, Union
 
 import numpy as np
 from scipy.integrate import odeint, solve_ivp
@@ -95,8 +95,13 @@ def _solve_function_ivp(params_solver_function: ParamsSolverFunction) -> ResultS
         args = []
     method = params_solver.pop("method", "RK45")
 
-    def fun_to_solve(t: np.ndarray, x: np.ndarray) -> np.ndarray:
-        return params_solver_function.function(t, x, *args)
+    def fun_to_solve(t: np.ndarray, x: np.ndarray) -> Union[np.ndarray, List[float]]:
+        result = params_solver_function.function(t, x, *args)
+        if len(result.shape) == 1:
+            return result.tolist()
+        if result.shape[0] == 1:
+            return result[0, :].tolist()
+        return result
 
     solution = solve_ivp(fun_to_solve, t_span, x0, method, dense_output=True, **params_solver)
     result = ResultSolverFunction(solution.t, solution.y.T, solution.sol)
