@@ -115,6 +115,29 @@ def test_diff_solution_system(solver_method, dimension):
     assert expected_solution(t_array, x0) == pytest.approx(x_array, 1e-3)
 
 
+@pytest.mark.parametrize(
+    "params_solver, dimension",
+    [
+        ({"method": "RK23"}, 4),
+        ({"method": "RK45"}, 4),
+        ({"method": "DOP853"}, 4),
+        ({"method": "Radau"}, 4),
+        ({"method": "BDF"}, 4),
+        ({"method": "LSODA"}, 4),
+    ],
+)
+def test_diff_solution_system_solve_ivp(params_solver, dimension):
+    """
+    Tets que comprueba el método solver de diff systema
+    """
+    dx, expected_solution = get_diff_system()
+    x0 = np.random.randint(-10, 10, size=dimension)
+    t_array, x_array = dx.solve_function(
+        solver_method="solve_ivp", t_span=[0, 1], x0=x0, params_solver=params_solver
+    )
+    assert expected_solution(t_array, x0) == pytest.approx(x_array, 5e-3)
+
+
 def test_diff_solution_system_error():
     """
     Tets que comprueba el error del método solver de diff systema
