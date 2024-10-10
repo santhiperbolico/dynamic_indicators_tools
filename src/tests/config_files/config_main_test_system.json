@@ -21,44 +21,68 @@
       }
     }
   },
-  "ftle_element_wise":{
-    "execute": true,
-    "h_steps": 0.01,
-    "params_t_close": {
-      "t_close":true,
-      "time_delta": 0.2,
-      "dimensions_close": [true, false, false],
-      "mod_solution": "tau"
-    }
-  },
-  "ftle_grid":{
-    "execute": true
-  },
-  "ftle_variational_equations":{
-    "execute": true,
-    "var_system": "tests.systems.test_system.fun_system_variational_equations"
-  },
-  "lagrangian_descriptors": {
-    "execute": true,
-    "tau": 5,
-    "ld_method": "differential_equations",
-    "params_solver": {"params_integrator": {"method": "fixed_quad"}},
-    "plot_orbits": true
-  },
-  "poincare_section": {
-    "execute": true,
-    "method_poincare": "PoincareSectionInterpolate",
-    "x0_grid": [[0, 1], [1, -1], [1, 0], [2, 3]],
-    "n_points": 100,
-    "poincare_map": "tests.systems.test_system.poincare_map_function",
-    "initial_conditions": {
-        "function_generator": "tests.systems.test_system.poincare_initial_conditions_function",
-        "params_function":{
-          "n_points": 10,
-          "x_min": [0, 0],
-          "x_max": [2, 2]
+  "dynamic_indicators": [
+    {
+      "name": "ftle_element_wise",
+      "params": {
+        "execute": true,
+        "h_steps": 0.01,
+        "params_t_close": {
+          "t_close": true,
+          "time_delta": 0.2,
+          "dimensions_close": [
+            true,
+            false,
+            false
+          ],
+          "mod_solution": "tau"
         }
-    }
-
-  }
+      }
+    },
+    {
+      "name": "ftle_grid",
+      "params": {
+        "execute": true
+      }
+    },
+    {
+      "name": "ftle_variational_equations",
+      "params": {
+        "execute": true,
+        "var_system": "tests.systems.test_system.fun_system_variational_equations"
+      }
+    },
+    {
+      "name": "lagrangian_descriptors",
+      "params":  {
+        "execute": true,
+        "tau": 5,
+        "ld_method": "differential_equations",
+        "params_solver": {"params_integrator": {"method": "fixed_quad"}},
+        "plot_orbits": true
+      }
+    },
+    {
+      "name": "poincare_section",
+      "params":  {
+        "execute": true,
+        "method_poincare": "PoincareSectionInterpolate",
+        "n_points": 100,
+        "poincare_map": "tests.systems.test_system.poincare_map_function",
+        "initial_conditions": {
+          "function_generator": "tests.systems.test_system.poincare_initial_conditions_function",
+          "params_function": {
+            "n_points": 10,
+            "x_min": [
+              0,
+              0
+            ],
+            "x_max": [
+              2,
+              2
+            ]
+          }
+        }
+      }
+    }]
 }

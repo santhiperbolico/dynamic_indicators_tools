@@ -11,6 +11,7 @@ from dynamic_indicators_tools.dynamic_indicators.dynamic_indicators_utils import
     LagrangianDescriptor,
     PoincareSections,
     get_dynamic_indicator,
+    main_process_di
 )
 
 
@@ -60,3 +61,21 @@ def test_main_process(dynamic_indicator_object, config_main_test):
         os.remove(filename)
     dynamic_indicator_object.process(params)
     assert os.path.exists(filename) or not params_processor.get_param("execute")
+
+
+def test_main_process_di(config_main_test):
+    with open(config_main_test, "r") as file_json:
+        params = json.load(file_json)
+    path = params.get("system_params").get("path")
+    main_process_di(params)
+    plot_tests = [
+        'test_system_ftle_grid_t_10_nx_grid_10.png',
+        'test_system_poincare_section_t_10_nx_grid_100.png',
+        'test_system_ftle_variational_equations_t_10_nx_grid_10.png',
+        'test_system_lagrangian_descriptors_t_10_nx_grid_10.png',
+        'test_system_ftle_element_wise_t_10_nx_grid_10_h_0.0100.png'
+    ]
+    for plot in plot_tests:
+        filename = os.path.join(path, plot)
+        assert os.path.exists(filename)
+        os.remove(filename)
