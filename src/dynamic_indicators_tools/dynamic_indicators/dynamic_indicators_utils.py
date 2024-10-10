@@ -71,11 +71,15 @@ def main_process_di(params: Dict[str, Any]) -> None:
         por defecto lo toma como False.
     """
     dynamic_indicators = params.copy()
-    system_params = dynamic_indicators.pop("system_params")
+    system_params = params.get("system_params")
+    dynamic_indicators_list = dynamic_indicators.pop("dynamic_indicators")
     path_system = system_params.get("path", ".")
     if not os.path.exists(path_system):
         os.mkdir(path_system)
-    for dynamic_indicator_name, dynamic_indicator_params in dynamic_indicators.items():
+    for di_element in dynamic_indicators_list:
+        dynamic_indicator_name = di_element.get("name")
+        di_params = dynamic_indicators.copy()
+        di_params.update({dynamic_indicator_name: di_element.get("params")})
         try:
             dynamic_indicator_object = get_dynamic_indicator(dynamic_indicator_name)
         except DynamicIndicatorNotExist:
@@ -84,5 +88,5 @@ def main_process_di(params: Dict[str, Any]) -> None:
                 "Se continua con el siguiente indicador."
             )
             continue
-        dynamic_indicator_object.process(params)
+        dynamic_indicator_object.process(di_params)
         logging.info("----------------------------------------------")
