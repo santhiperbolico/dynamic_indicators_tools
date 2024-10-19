@@ -116,11 +116,13 @@ class LagrangianDescriptor(DynamicIndicator):
         """
 
         n_xgrid = params_processor.get_param("n_xgrid")
+        ld_method = params_processor.get_param("ld_method")
         n_xgrid_total = np.prod(n_xgrid) if isinstance(n_xgrid, np.ndarray) else n_xgrid
         system_name = params_processor.get_param("system_name")
         t = params_processor.get_param("t")
         fname = (
-            f"{system_name}_{self.name_dynamic_indicator}_t_{t:.0f}_nx_grid_{n_xgrid_total:.0f}"
+            f"{system_name}_{self.name_dynamic_indicator}_{ld_method}_"
+            f"t_{t:.0f}_nx_grid_{n_xgrid_total:.0f}"
         )
         return fname
 

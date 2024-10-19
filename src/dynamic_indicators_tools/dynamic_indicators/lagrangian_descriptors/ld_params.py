@@ -35,7 +35,7 @@ def format_ld_method(value: Optional[str]) -> Optional[str]:
     ld_methods = ["integrate", "differential_equations"]
 
     if value is None:
-        return "differential_equations"
+        return "integrate"
     if value in ld_methods:
         return value
     raise ValueError(
