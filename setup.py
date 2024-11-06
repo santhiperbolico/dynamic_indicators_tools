@@ -5,7 +5,7 @@ with open("README.md", "r") as fh:
 
 setuptools.setup(
     name="dynamic_indicators_tools",
-    version="1.0.3",
+    version="2.0.0",
     author="Santiago Arranz Sanz",
     description="Repositorio que recoge herramientas para el análisis de sistemas dinámicos",
     long_description=long_description,
@@ -17,7 +17,7 @@ setuptools.setup(
         "License :: OSI Approved :: MIT License",
         "Operating System :: OS Independent",
     ],
-    python_requires=">=3.8",
+    python_requires=">=3.11",
     py_modules=["dynamic_indicators_tools"],
     package_dir={"": "src"},
     install_requires=["numpy", "scipy", "matplotlib", "attrs", "tqdm", "pyqt5"],
