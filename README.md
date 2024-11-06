@@ -5,22 +5,40 @@ invariantes o indicadores dinámicos como los campos FTLE [[1]](#Referencias), L
 Lagrangian Structure Coehrents (LCS) [[3]](#Referencias).    
 
 ## Cómo comenzar
-Las funciones que contiene este paquete están desarroladas utilizando `Python 3.8`.
+Las funciones que contiene este paquete están desarroladas utilizando `Python 3.11`.
 
 ### Requirements
 Los paquetes que utiliza estas funciones son: 
 ```
-scipy>=1.10.1,<1.10.2
+scipy>=1.11.4, <1.12.0
 matplotlib>=3.7.1,<3.7.2
-attrs>=23.1.0,<23.1.1
-tqdm>=4.65.0,<4.65.1
-pyqt5>=5.15.9,<5.15.10
+attrs>=24.2.0,<25.0.0
+tqdm>=4.66.0,<4.67.0
+pyqt5>=5.15.9
 ```
 
 ### Instalación
 ```
 pip install dynamic-indicators-tools
 ```
+
+### Indicadores Dinámicos
+Los indicadores dinámicos son herramientas matemáticas utilizadas para analizar el comportamiento y la estabilidad de sistemas dinámicos. En este repositorio se incluyen los siguientes indicadores:
+
+- **Finite Time Lyapunov Exponents (FTLE)**: Evalúa la sensibilidad del sistema a condiciones iniciales, ayudando a identificar estructuras coherentes en flujos caóticos.
+  -  `ftle_element_wise`: Implementa el cálculo del FTLE en una malla punto a punto.
+  -  `ftle_grid`: Implementa el calculo del FTLE directamente en la malla, calculando primero el valor de `f(t, y(t)` para cada punto.
+  -  `ftle_variational_equations`: Implementa el cálculo del FTLE directamente en la solución del sistema, integrando el cálculo en el sistema diferencial a traves de las ecuaciones variacionales.
+- **Lagrangian Descriptors (LD)**: Evalua la velocidad media del flujo del sistema diferencial para un intervalo de tiempo dado.
+  - `lagrangian_descriptors`: Calcula los LD en cada punto integrando el problema (`ld_method=integrate`) o añadiendo el LD dentro del sistema diferencial (`ld_method=differential_equations`).
+- **Secciones de Poincaré**: Permiten visualizar trayectorias periódicas y comportamiento a largo plazo en sistemas dinámicos.
+  - `poincare_section`: Implementan el cálculo de las secciones de poincaré indicadas en la función `poincare_map`.
+
+### Ejemplos de Implementación
+La carpeta [`example`](https://github.com/santhiperbolico/dynamic_indicators_tools/tree/main/examples) contiene ejemplos prácticos de cómo implementar y usar cada uno de los indicadores dinámicos incluidos en este repositorio. 
+Estos ejemplos muestran configuraciones aplicables para distintos sistemas dinámicos y ayudan a entender el proceso completo de cálculo y análisis de indicadores como FTLE o Lagrangian Descriptors en situaciones reales.
+
+El ejemplo que podemos encontrar es el del péndulo no lineal amortiguado para cada uno de los indicadores dinámicos disponibles. 
 
 ### Contenido
 Dado un sistema diferencial, un espacio de fase $\mathcal{D}$ y un tiempo inicial $t_0$, el campo de los *finite-time 
@@ -86,6 +104,7 @@ y `test_lagrangian_descriptors.py` usando el sistema lineal definido anteriormen
 Haciendo uso de la función `main_process_di` definida en `dynamic_indicators_process`, que dado un archivo json ejecuta 
 el método `process` de cada indicador, se puede observar un ejemplo de esta implementación con los sistemas del péndulo 
 no lineal simple y amortiguado en la carpeta examples del [repositorio](https://github.com/santhiperbolico/dynamic_indicators_tools).
+
 
 ## Referencias
 [1] Shadden, S. C., Lekien, F., & Marsden, J. E. (2005). Definition and properties of Lagrangian coherent structures from finite-time Lyapunov exponents in two-dimensional aperiodic flows. Physica D: Nonlinear Phenomena, 212(3-4), 271-304.

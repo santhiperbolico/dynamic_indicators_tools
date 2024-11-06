@@ -1,0 +1,3 @@
+[INFO] [2024-11-06 17:06:23,972] Ejecutando archivo pendulum - 0
+[INFO] [2024-11-06 17:06:23,972] Ejecutando ftle_element_wise
+[INFO] [2024-11-06 17:06:23,972] -- Cargando parámetros.
