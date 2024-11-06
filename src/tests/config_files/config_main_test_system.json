@@ -41,7 +41,8 @@
   "lagrangian_descriptors": {
     "execute": true,
     "tau": 5,
-    "method_integrate": "fixed_quad",
+    "ld_method": "differential_equations",
+    "params_solver": {"params_integrator": {"method": "fixed_quad"}},
     "plot_orbits": true
   },
   "poincare_section": {

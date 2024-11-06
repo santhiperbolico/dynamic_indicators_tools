@@ -5,7 +5,7 @@ from typing import Any, Dict, List
 import numpy as np
 
 from .ld_params import LD_PARAMS
-from .ld_utils import lagrangian_descriptors
+from .ld_utils import ParamsLD, lagrangian_descriptors
 from dynamic_indicators_tools.dynamic_indicators.dynamic_indicators_process import (
     DynamicIndicator,
     create_system,
@@ -47,15 +47,17 @@ class LagrangianDescriptor(DynamicIndicator):
             params = {}
         params_indicator.update(params.get("system_params"))
         params_indicator.update(params.get(self.name_dynamic_indicator, {}))
+        params_solver = params_indicator.get("params_solver")
         params_indicator.update(
             {
                 "params_solver": {
-                    "solver_method": params_indicator.get("solver_method", "solve_ivp"),
-                    "t0": params_indicator.get("t0", 0),
-                    "args": params_indicator.get("args_system", ()),
-                }
-            }
+                    "solver_method": params.get("system_params").get("solver_method"),
+                    "params_solver": params_solver,
+                },
+                "args": params.get("system_params").get("args_system", ()),
+            },
         )
+
         params_processor = ParamProcessor(self.default_params, params_indicator)
         return params_processor
 
@@ -114,11 +116,13 @@ class LagrangianDescriptor(DynamicIndicator):
         """
 
         n_xgrid = params_processor.get_param("n_xgrid")
+        ld_method = params_processor.get_param("ld_method")
         n_xgrid_total = np.prod(n_xgrid) if isinstance(n_xgrid, np.ndarray) else n_xgrid
         system_name = params_processor.get_param("system_name")
         t = params_processor.get_param("t")
         fname = (
-            f"{system_name}_{self.name_dynamic_indicator}_t_{t:.0f}_nx_grid_{n_xgrid_total:.0f}"
+            f"{system_name}_{self.name_dynamic_indicator}_{ld_method}_"
+            f"t_{t:.0f}_nx_grid_{n_xgrid_total:.0f}"
         )
         return fname
 
@@ -147,11 +151,8 @@ class LagrangianDescriptor(DynamicIndicator):
             log_scale = params_processor.get_param("log_scale_color")
 
             logging.info("-- Ejecutando el cálculo de malla.")
-            grid_points, diff_f = lagrangian_descriptors(
-                diff_system=flow_map.diff_system,
-                opts_integrate={"args_func": flow_map.args_func},
-                **params_indicator,
-            )
+            ld_params = ParamsLD(diff_system=flow_map.diff_system, **params_indicator)
+            grid_points, diff_f = lagrangian_descriptors(ld_params)
 
             _, _ = plot_descriptors_map(
                 grid_points[axis_data[0]],

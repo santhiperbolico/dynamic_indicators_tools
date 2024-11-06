@@ -11,6 +11,7 @@ from dynamic_indicators_tools.differentials_systems.data_transformations import 
 from dynamic_indicators_tools.differentials_systems.diff_system import (
     DoesntCoincideDimension,
     FlowMap,
+    check_array_size,
 )
 from dynamic_indicators_tools.numercial_methods.differentiation import (
     diff_partials_grid,
@@ -129,14 +130,8 @@ def ftle_element_wise(
     n_var = x0_max.size
     if isinstance(n_xgrid, int):
         n_xgrid = np.ones(n_var).astype(int) * n_xgrid
-    if x0_min.size != n_var:
-        raise DoesntCoincideDimension(
-            "La dimensión de x0_min_grid y x0_max_grid" " deben ser iguales."
-        )
-    if n_xgrid.size != n_var:
-        raise DoesntCoincideDimension(
-            "La dimensión de nx_grid no coincide con el número de variables."
-        )
+    check_array_size({"x0_max_grid": x0_min, "n_xgrid": n_xgrid}, n_var)
+
     if params_t_close is None:
         params_t_close = {}
 
