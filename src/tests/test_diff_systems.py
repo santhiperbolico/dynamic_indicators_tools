@@ -8,8 +8,10 @@ from dynamic_indicators_tools.differentials_systems.diff_system import (
     DiffSystem,
     DiffVariable,
     DoesntCoincideDimension,
+    DoesntCoincideSize,
     DoesntExistSolution,
     FlowMap,
+    check_array_size,
 )
 from dynamic_indicators_tools.differentials_systems.solver_integrators import (
     DoesntExisteSolverIntegerMethod,
@@ -73,6 +75,16 @@ def test_diff_variables_solution_error():
     t_values = np.array([0, 1, 2, 3])
     with pytest.raises(DoesntExistSolution):
         _ = x(t_values)
+
+
+def test_check_array_size():
+    """
+    Tets que comprueba el error del método test_check_array_size
+    """
+    arrays = {"x2": np.array([1, 2]), "x1": np.array([1, 2, 3])}
+    n_var = 2
+    with pytest.raises(DoesntCoincideSize):
+        check_array_size(arrays, n_var)
 
 
 def test_diff_variables_set_values_error_dimension():
@@ -203,11 +215,11 @@ def test_flow_grid(dimension: int, nx_grid: Union[int, Sequence[int]]):
     assert grid_points[0].size == expected_size
 
 
-def test_flow_grid_error_dimension_grid():
+def test_flow_grid_error_size_grid():
     """
     Test que comprueba la funcionalidad del método flow_grid que
     calcula una malla del flujo de un sistema dinámico. En este caso
-    comprueba el error DoesntCoincideDimension cuando los limites
+    comprueba el error DoesntCoincideSize cuando los limites
     de la malla no coinciden en dimensión.
 
     Parameters
@@ -220,15 +232,15 @@ def test_flow_grid_error_dimension_grid():
     x_min_grid = np.array([0] * 2)
     x_max_grid = np.array([10] * 3)
     nx_grid = 2
-    with pytest.raises(DoesntCoincideDimension):
+    with pytest.raises(DoesntCoincideSize):
         _, _ = flow_x.flow_grid(1, x_min_grid, x_max_grid, nx_grid, n_jobs=1)
 
 
-def test_flow_grid_error_dimension_nx_grid():
+def test_flow_grid_error_size_nx_grid():
     """
     Test que comprueba la funcionalidad del método flow_grid que
     calcula una malla del flujo de un sistema dinámico. En este caso
-    comprueba el error DoesntCoincideDimension cuando nx_grid es un
+    comprueba el error DoesntCoincideSize cuando nx_grid es un
     array y no coincide con el número de variables
 
     Parameters
@@ -241,7 +253,7 @@ def test_flow_grid_error_dimension_nx_grid():
     x_min_grid = np.array([0] * 3)
     x_max_grid = np.array([10] * 3)
     nx_grid = np.array([2, 2])
-    with pytest.raises(DoesntCoincideDimension):
+    with pytest.raises(DoesntCoincideSize):
         _, _ = flow_x.flow_grid(1, x_min_grid, x_max_grid, nx_grid, n_jobs=1)
 
 

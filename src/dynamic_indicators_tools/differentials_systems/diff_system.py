@@ -35,6 +35,35 @@ class DoesntCoincideDimension(Exception):
     pass
 
 
+class DoesntCoincideSize(Exception):
+    """
+    Error que indica que la variable t la x no tiene el mismo tamaño
+    """
+
+    pass
+
+
+def check_array_size(array_dict: Dict[str, np.ndarray], n_var: int):
+    """
+    Función que comprueba que todos los vectores de array_dict tienen
+    el tamaño n_var.
+
+    Parameters
+    ----------
+    array_dict: Dict[str, np.ndarray]
+        Diccionario que asocia el nombre de un vector con el np.ndarray del vector.
+    n_var: int
+        Dimensión del array.
+
+    Raises
+    -------
+    DoesntCoincideSize: Devuelve un error si las dimensiones no cuadran con n_var
+    """
+    for key, value in array_dict.items():
+        if value.size != n_var:
+            raise DoesntCoincideSize("El tamaño de x0_min_grid y %s deben ser iguales." % key)
+
+
 @attrs
 class DiffVariable:
     """
@@ -338,14 +367,9 @@ class FlowMap:
         n_var = x0_max.size
         if isinstance(n_xgrid, int):
             n_xgrid = np.ones(n_var).astype(int) * n_xgrid
-        if x0_min.shape != x0_max.shape:
-            raise DoesntCoincideDimension(
-                "La dimensión de x0_min_grid y x0_max_grid" " deben ser iguales."
-            )
-        if n_xgrid.size != n_var:
-            raise DoesntCoincideDimension(
-                "La dimensión de nx_grid no coincide con el número de variables."
-            )
+
+        check_array_size({"x0_max_grid": x0_min, "n_xgrid": n_xgrid}, n_var)
+
         grid_points = np.meshgrid(
             *[np.linspace(x0_min[i], x0_max[i], n_xgrid[i]) for i in range(n_var)]
         )

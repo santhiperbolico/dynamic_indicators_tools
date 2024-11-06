@@ -95,3 +95,7 @@ def function_system_variational_equations(v: DiffVariable, b: float, c: float) -
     fval4 = (v.values[:, 3] - b * v.values[:, 5]).reshape(-1, 1)
     fval5 = (v.values[:, 4] - b * v.values[:, 6]).reshape(-1, 1)
     return np.concatenate((fval0, fval1, fval2, fval3, fval4, fval5), axis=1)
+
+
+def poincare_map_function(x: np.ndarray):
+    return x[1] - x[0]

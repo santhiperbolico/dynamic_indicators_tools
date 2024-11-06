@@ -4,7 +4,7 @@ from dynamic_indicators_tools.main_dynamic_indicators_process import (
     multi_process_dynamic_indicators,
 )
 
-PATH = "examples/pendulum_simple/config_files/"
+PATH = "config_files/"
 
 CONFIG_FILES = [
     os.path.join(PATH, "config_main_pendulum_system_t_10.json"),
