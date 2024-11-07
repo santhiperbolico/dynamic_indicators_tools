@@ -1,0 +1,17 @@
+[INFO] [2024-11-07 11:41:37,714] Ejecutando archivo lorenz_system - 0
+[INFO] [2024-11-07 11:41:37,714] ----------------------------------------------
+[INFO] [2024-11-07 11:41:37,714] ----------------------------------------------
+[INFO] [2024-11-07 11:41:37,714] ----------------------------------------------
+[INFO] [2024-11-07 11:41:37,714] Ejecutando lagrangian_descriptors
+[INFO] [2024-11-07 11:41:37,714] -- Cargando parámetros.
+[INFO] [2024-11-07 11:41:37,714] -- Parámetros del proceso:
+[INFO] [2024-11-07 11:41:37,714] 	 T=15
+[INFO] [2024-11-07 11:41:37,714] 	 Número de puntos =10
+[INFO] [2024-11-07 11:41:37,714] 	 - Intervalo Tau usado = 3
+[INFO] [2024-11-07 11:41:37,714] 	 - Método de integración usado = None
+[INFO] [2024-11-07 11:41:37,714] 	 Solver usado = solve_ivp
+[INFO] [2024-11-07 11:41:37,714] 	 Límite inferior de la malla = [1, 0, 0]
+[INFO] [2024-11-07 11:41:37,714] 	 Límite superior de la malla = [1.001, 1.5, 1.5]
+[INFO] [2024-11-07 11:41:37,714] 	 Número máximo de hilos = 1
+[INFO] [2024-11-07 11:41:37,714] 	 - Creando el sistema lorenz_system
+[INFO] [2024-11-07 11:41:37,714] -- Ejecutando el cálculo de malla.

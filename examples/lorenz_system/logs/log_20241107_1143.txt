@@ -1,0 +1,48 @@
+[INFO] [2024-11-07 11:43:01,901] Ejecutando archivo lorenz_system - 0
+[INFO] [2024-11-07 11:43:01,901] ----------------------------------------------
+[INFO] [2024-11-07 11:43:01,901] ----------------------------------------------
+[INFO] [2024-11-07 11:43:01,901] ----------------------------------------------
+[INFO] [2024-11-07 11:43:01,901] Ejecutando lagrangian_descriptors
+[INFO] [2024-11-07 11:43:01,901] -- Cargando parámetros.
+[INFO] [2024-11-07 11:43:01,901] -- Parámetros del proceso:
+[INFO] [2024-11-07 11:43:01,901] 	 T=15
+[INFO] [2024-11-07 11:43:01,901] 	 Número de puntos =40000
+[INFO] [2024-11-07 11:43:01,901] 	 - Intervalo Tau usado = 3
+[INFO] [2024-11-07 11:43:01,901] 	 - Método de integración usado = None
+[INFO] [2024-11-07 11:43:01,901] 	 Solver usado = solve_ivp
+[INFO] [2024-11-07 11:43:01,901] 	 Límite inferior de la malla = [1, 0, 0]
+[INFO] [2024-11-07 11:43:01,901] 	 Límite superior de la malla = [1.001, 1.5, 1.5]
+[INFO] [2024-11-07 11:43:01,901] 	 Número máximo de hilos = 1
+[INFO] [2024-11-07 11:43:01,902] 	 - Creando el sistema lorenz_system
+[INFO] [2024-11-07 11:43:01,902] -- Ejecutando el cálculo de malla.
+[INFO] [2024-11-07 11:43:21,763] Ejecutando archivo lorenz_system - 0
+[INFO] [2024-11-07 11:43:21,763] ----------------------------------------------
+[INFO] [2024-11-07 11:43:21,764] ----------------------------------------------
+[INFO] [2024-11-07 11:43:21,764] ----------------------------------------------
+[INFO] [2024-11-07 11:43:21,764] Ejecutando lagrangian_descriptors
+[INFO] [2024-11-07 11:43:21,764] -- Cargando parámetros.
+[INFO] [2024-11-07 11:43:21,764] -- Parámetros del proceso:
+[INFO] [2024-11-07 11:43:21,764] 	 T=15
+[INFO] [2024-11-07 11:43:21,764] 	 Número de puntos =2500
+[INFO] [2024-11-07 11:43:21,764] 	 - Intervalo Tau usado = 3
+[INFO] [2024-11-07 11:43:21,764] 	 - Método de integración usado = None
+[INFO] [2024-11-07 11:43:21,764] 	 Solver usado = solve_ivp
+[INFO] [2024-11-07 11:43:21,764] 	 Límite inferior de la malla = [1, 0, 0]
+[INFO] [2024-11-07 11:43:21,764] 	 Límite superior de la malla = [1.001, 1.5, 1.5]
+[INFO] [2024-11-07 11:43:21,764] 	 Número máximo de hilos = 1
+[INFO] [2024-11-07 11:43:21,764] 	 - Creando el sistema lorenz_system
+[INFO] [2024-11-07 11:43:21,764] -- Ejecutando el cálculo de malla.
+[INFO] [2024-11-07 11:43:35,888] Ejecutando archivo lorenz_system - 0
+[INFO] [2024-11-07 11:43:35,888] ----------------------------------------------
+[INFO] [2024-11-07 11:43:35,888] ----------------------------------------------
+[INFO] [2024-11-07 11:43:35,888] Ejecutando ftle_variational_equations
+[INFO] [2024-11-07 11:43:35,888] -- Cargando parámetros.
+[INFO] [2024-11-07 11:43:35,889] -- Parámetros del proceso:
+[INFO] [2024-11-07 11:43:35,889] 	 T=15
+[INFO] [2024-11-07 11:43:35,889] 	 Número de puntos =2500
+[INFO] [2024-11-07 11:43:35,889] 	 Solver usado = solve_ivp
+[INFO] [2024-11-07 11:43:35,889] 	 Límite inferior de la malla = [1, 0, 0]
+[INFO] [2024-11-07 11:43:35,889] 	 Límite superior de la malla = [1.001, 1.5, 1.5]
+[INFO] [2024-11-07 11:43:35,889] 	 Número máximo de hilos = 1
+[INFO] [2024-11-07 11:43:35,889] 	 - Creando el sistema lorenz_system
+[INFO] [2024-11-07 11:43:35,889] -- Ejecutando el cálculo de malla con ecuaciones variacionales.

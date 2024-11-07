@@ -1,0 +1,234 @@
+[INFO] [2024-11-07 12:16:12,752] Ejecutando archivo lorenz_system - 0
+[INFO] [2024-11-07 12:16:12,752] ----------------------------------------------
+[INFO] [2024-11-07 12:16:12,752] ----------------------------------------------
+[INFO] [2024-11-07 12:16:12,752] ----------------------------------------------
+[INFO] [2024-11-07 12:16:12,752] ----------------------------------------------
+[INFO] [2024-11-07 12:16:12,752] Ejecutando poincare_section
+[INFO] [2024-11-07 12:16:12,752] -- Cargando parámetros.
+[INFO] [2024-11-07 12:16:12,753] -- Parámetros del proceso:
+[INFO] [2024-11-07 12:16:12,753] 	 T=10
+[INFO] [2024-11-07 12:16:12,753] 	 Número de puntos =100
+[INFO] [2024-11-07 12:16:12,753] 	 Solver usado = solve_ivp
+[INFO] [2024-11-07 12:16:12,753] 	 Las condiciones iniciales usadas son:
+[INFO] [2024-11-07 12:16:12,753] 	 [1.0064718849904253, 0.274756689386007, 1.013533757728878]
+[INFO] [2024-11-07 12:16:12,753] 	 [1.0058890366504074, 0.13806584913324427, 0.594435255409889]
+[INFO] [2024-11-07 12:16:12,753] 	 [1.0064266873523122, 1.2207444215716947, 1.4539128352709456]
+[INFO] [2024-11-07 12:16:12,753] 	 [1.0060033362415701, 0.30430468922556964, 0.10036503401827007]
+[INFO] [2024-11-07 12:16:12,753] 	 [1.0088788703740643, 1.240143671332927, 0.37687091901914804]
+[INFO] [2024-11-07 12:16:12,753] 	 [1.0026997293476676, 1.2535102648423833, 0.8463234133458613]
+[INFO] [2024-11-07 12:16:12,753] 	 [1.0034157684056442, 1.2654099434747126, 0.8128290058543817]
+[INFO] [2024-11-07 12:16:12,753] 	 [1.0053237881736588, 1.2449280608779139, 0.362097207394803]
+[INFO] [2024-11-07 12:16:12,753] 	 [1.0061348853409666, 0.9976954073874411, 0.6060573989592106]
+[INFO] [2024-11-07 12:16:12,753] 	 [1.0078021028931348, 0.7982542186274315, 0.9817026680973129]
+[INFO] [2024-11-07 12:16:12,753] 	 [1.0096386559355175, 1.4531404477051828, 0.19122468596067388]
+[INFO] [2024-11-07 12:16:12,753] 	 [1.0070849265157313, 0.5836821693494334, 1.0865005918889645]
+[INFO] [2024-11-07 12:16:12,753] 	 [1.004678745729698, 1.161370847913965, 1.2472159261879725]
+[INFO] [2024-11-07 12:16:12,753] 	 [1.0038938302923988, 1.3255726855141186, 0.6077620244665641]
+[INFO] [2024-11-07 12:16:12,753] 	 [1.002158717781818, 1.2004155897444428, 1.0243954212418576]
+[INFO] [2024-11-07 12:16:12,753] 	 [1.0045429323038992, 1.3127049591810058, 0.5487948760810321]
+[INFO] [2024-11-07 12:16:12,753] 	 [1.0061129261016446, 0.7090956758474395, 0.2795024667809324]
+[INFO] [2024-11-07 12:16:12,753] 	 [1.0094426437691426, 1.3204380227129748, 1.385976202510475]
+[INFO] [2024-11-07 12:16:12,753] 	 [1.0092522234692791, 0.7556167348923992, 0.602306738406606]
+[INFO] [2024-11-07 12:16:12,753] 	 [1.0082344915491457, 0.28346062883301015, 1.2652769283825975]
+[INFO] [2024-11-07 12:16:12,753] 	 [1.0082900595913984, 0.29117109885168935, 0.260969486197083]
+[INFO] [2024-11-07 12:16:12,753] 	 [1.0004287305506463, 0.627735788558833, 1.1073761649193992]
+[INFO] [2024-11-07 12:16:12,753] 	 [1.0049882765884517, 0.799712133402858, 0.7039110783033167]
+[INFO] [2024-11-07 12:16:12,753] 	 [1.0058445963081217, 1.4768678602129326, 1.074639695422775]
+[INFO] [2024-11-07 12:16:12,753] 	 [1.0064092847250237, 0.742004278617123, 0.7797900556326909]
+[INFO] [2024-11-07 12:16:12,753] 	 [1.0096959125037261, 0.013654426257112329, 0.37546882011628485]
+[INFO] [2024-11-07 12:16:12,753] 	 [1.0085703468228782, 0.24204111062266043, 0.010129905094527936]
+[INFO] [2024-11-07 12:16:12,753] 	 [1.008918274686408, 1.4028364278300762, 0.1860798686368788]
+[INFO] [2024-11-07 12:16:12,753] 	 [1.0052897042914795, 0.7911719041038037, 1.4071060474018653]
+[INFO] [2024-11-07 12:16:12,753] 	 [1.0019303242235202, 0.6024278131190601, 0.13671114019439773]
+[INFO] [2024-11-07 12:16:12,753] 	 [1.0053311252061694, 0.9744172221845293, 0.22953890527833898]
+[INFO] [2024-11-07 12:16:12,753] 	 [1.0097995706152922, 0.9457486567751883, 0.38689605297541535]
+[INFO] [2024-11-07 12:16:12,753] 	 [1.0056339209757765, 0.033817018118287856, 0.32146170126830137]
+[INFO] [2024-11-07 12:16:12,753] 	 [1.0004604873734129, 0.8732939584302364, 0.3675763697061102]
+[INFO] [2024-11-07 12:16:12,753] 	 [1.0059238031495226, 0.11907271434831712, 1.292244196987272]
+[INFO] [2024-11-07 12:16:12,753] 	 [1.002918972005727, 0.2180252220009316, 0.44663235867802054]
+[INFO] [2024-11-07 12:16:12,753] 	 [1.0087629685401025, 0.8287413980504061, 1.3510674260122055]
+[INFO] [2024-11-07 12:16:12,753] 	 [1.0023740390002371, 0.9126156141359046, 0.16837528847259642]
+[INFO] [2024-11-07 12:16:12,753] 	 [1.0008343939819389, 0.6551307933819338, 0.3231876734145192]
+[INFO] [2024-11-07 12:16:12,753] 	 [1.0092154688244466, 0.659782644066829, 0.9349409310548169]
+[INFO] [2024-11-07 12:16:12,753] 	 [1.005877794639364, 0.9639261126286355, 1.46089383933225]
+[INFO] [2024-11-07 12:16:12,753] 	 [1.0012508321000715, 0.25535148202766744, 0.9035223937322032]
+[INFO] [2024-11-07 12:16:12,753] 	 [1.0098531037370309, 0.6879644902925097, 0.747781402413535]
+[INFO] [2024-11-07 12:16:12,753] 	 [1.0081982924017845, 0.191113400936806, 1.3773976023432704]
+[INFO] [2024-11-07 12:16:12,753] 	 [1.009830277542674, 1.4615811848307498, 0.4482342523304502]
+[INFO] [2024-11-07 12:16:12,753] 	 [1.0003102965902748, 0.6098832963663559, 0.5311484500327666]
+[INFO] [2024-11-07 12:16:12,753] 	 [1.0026784016662456, 0.3555906346490677, 0.38436727899572987]
+[INFO] [2024-11-07 12:16:12,753] 	 [1.0056706671562325, 0.6540485765191211, 0.024890369494274533]
+[INFO] [2024-11-07 12:16:12,753] 	 [1.0003015202755217, 0.7529638357126871, 1.1870381000709898]
+[INFO] [2024-11-07 12:16:12,753] 	 [1.0000095719253261, 1.3266621100433094, 1.1405798330201198]
+[INFO] [2024-11-07 12:16:12,753] 	 - Creando el sistema lorenz_system
+[INFO] [2024-11-07 12:16:12,753] -- Ejecutando el cálculo la sección de poincaré.
+[INFO] [2024-11-07 12:16:12,767] Se han encontrado 2 puntos con cambios de signo.
+[INFO] [2024-11-07 12:16:12,781] Se han encontrado 2 puntos con cambios de signo.
+[INFO] [2024-11-07 12:16:12,795] Se han encontrado 2 puntos con cambios de signo.
+[INFO] [2024-11-07 12:16:12,808] Se han encontrado 2 puntos con cambios de signo.
+[INFO] [2024-11-07 12:16:12,825] Se han encontrado 2 puntos con cambios de signo.
+[INFO] [2024-11-07 12:16:12,840] Se han encontrado 2 puntos con cambios de signo.
+[INFO] [2024-11-07 12:16:12,854] Se han encontrado 2 puntos con cambios de signo.
+[INFO] [2024-11-07 12:16:12,868] Se han encontrado 2 puntos con cambios de signo.
+[INFO] [2024-11-07 12:16:12,881] Se han encontrado 2 puntos con cambios de signo.
+[INFO] [2024-11-07 12:16:12,895] Se han encontrado 2 puntos con cambios de signo.
+[INFO] [2024-11-07 12:16:12,907] Se han encontrado 2 puntos con cambios de signo.
+[INFO] [2024-11-07 12:16:12,921] Se han encontrado 2 puntos con cambios de signo.
+[INFO] [2024-11-07 12:16:12,936] Se han encontrado 2 puntos con cambios de signo.
+[INFO] [2024-11-07 12:16:12,950] Se han encontrado 2 puntos con cambios de signo.
+[INFO] [2024-11-07 12:16:12,964] Se han encontrado 2 puntos con cambios de signo.
+[INFO] [2024-11-07 12:16:12,977] Se han encontrado 2 puntos con cambios de signo.
+[INFO] [2024-11-07 12:16:12,990] Se han encontrado 2 puntos con cambios de signo.
+[INFO] [2024-11-07 12:16:13,008] Se han encontrado 2 puntos con cambios de signo.
+[INFO] [2024-11-07 12:16:13,022] Se han encontrado 2 puntos con cambios de signo.
+[INFO] [2024-11-07 12:16:13,036] Se han encontrado 2 puntos con cambios de signo.
+[INFO] [2024-11-07 12:16:13,048] Se han encontrado 2 puntos con cambios de signo.
+[INFO] [2024-11-07 12:16:13,062] Se han encontrado 2 puntos con cambios de signo.
+[INFO] [2024-11-07 12:16:13,076] Se han encontrado 2 puntos con cambios de signo.
+[INFO] [2024-11-07 12:16:13,089] Se han encontrado 2 puntos con cambios de signo.
+[INFO] [2024-11-07 12:16:13,103] Se han encontrado 2 puntos con cambios de signo.
+[INFO] [2024-11-07 12:16:13,116] Se han encontrado 2 puntos con cambios de signo.
+[INFO] [2024-11-07 12:16:13,129] Se han encontrado 2 puntos con cambios de signo.
+[INFO] [2024-11-07 12:16:13,142] Se han encontrado 2 puntos con cambios de signo.
+[INFO] [2024-11-07 12:16:13,156] Se han encontrado 2 puntos con cambios de signo.
+[INFO] [2024-11-07 12:16:13,169] Se han encontrado 2 puntos con cambios de signo.
+[INFO] [2024-11-07 12:16:13,182] Se han encontrado 2 puntos con cambios de signo.
+[INFO] [2024-11-07 12:16:13,195] Se han encontrado 2 puntos con cambios de signo.
+[INFO] [2024-11-07 12:16:13,208] Se han encontrado 2 puntos con cambios de signo.
+[INFO] [2024-11-07 12:16:13,221] Se han encontrado 2 puntos con cambios de signo.
+[INFO] [2024-11-07 12:16:13,235] Se han encontrado 2 puntos con cambios de signo.
+[INFO] [2024-11-07 12:16:13,249] Se han encontrado 2 puntos con cambios de signo.
+[INFO] [2024-11-07 12:16:13,263] Se han encontrado 2 puntos con cambios de signo.
+[INFO] [2024-11-07 12:16:13,276] Se han encontrado 2 puntos con cambios de signo.
+[INFO] [2024-11-07 12:16:13,289] Se han encontrado 2 puntos con cambios de signo.
+[INFO] [2024-11-07 12:16:13,302] Se han encontrado 2 puntos con cambios de signo.
+[INFO] [2024-11-07 12:16:13,316] Se han encontrado 2 puntos con cambios de signo.
+[INFO] [2024-11-07 12:16:13,330] Se han encontrado 2 puntos con cambios de signo.
+[INFO] [2024-11-07 12:16:13,344] Se han encontrado 2 puntos con cambios de signo.
+[INFO] [2024-11-07 12:16:13,359] Se han encontrado 2 puntos con cambios de signo.
+[INFO] [2024-11-07 12:16:13,372] Se han encontrado 2 puntos con cambios de signo.
+[INFO] [2024-11-07 12:16:13,385] Se han encontrado 2 puntos con cambios de signo.
+[INFO] [2024-11-07 12:16:13,398] Se han encontrado 2 puntos con cambios de signo.
+[INFO] [2024-11-07 12:16:13,413] Se han encontrado 2 puntos con cambios de signo.
+[INFO] [2024-11-07 12:16:13,427] Se han encontrado 2 puntos con cambios de signo.
+[INFO] [2024-11-07 12:16:13,441] Se han encontrado 2 puntos con cambios de signo.
+[INFO] [2024-11-07 12:16:13,742] - Sección de Poincaré guardada en plots/lorenz_system_poincare_section_t_10_nx_grid_100.png.
+[INFO] [2024-11-07 12:16:13,742] - Fin del proceso de poincare_section
+[INFO] [2024-11-07 12:16:13,742] ----------------------------------------------
+[INFO] [2024-11-07 12:16:43,546] Ejecutando archivo lorenz_system - 0
+[INFO] [2024-11-07 12:16:43,547] ----------------------------------------------
+[INFO] [2024-11-07 12:16:43,547] ----------------------------------------------
+[INFO] [2024-11-07 12:16:43,547] ----------------------------------------------
+[INFO] [2024-11-07 12:16:43,547] ----------------------------------------------
+[INFO] [2024-11-07 12:16:43,547] Ejecutando poincare_section
+[INFO] [2024-11-07 12:16:43,547] -- Cargando parámetros.
+[INFO] [2024-11-07 12:16:43,547] -- Parámetros del proceso:
+[INFO] [2024-11-07 12:16:43,547] 	 T=10
+[INFO] [2024-11-07 12:16:43,547] 	 Número de puntos =100
+[INFO] [2024-11-07 12:16:43,547] 	 Solver usado = solve_ivp
+[INFO] [2024-11-07 12:16:43,547] 	 Las condiciones iniciales usadas son:
+[INFO] [2024-11-07 12:16:43,547] 	 [1.0, 0.7267460263062591, 0.1441232421884613]
+[INFO] [2024-11-07 12:16:43,547] 	 [1.0, 0.015344532998494476, 0.3897987863390175]
+[INFO] [2024-11-07 12:16:43,547] 	 [1.0, 0.45889631610674614, 0.39716389723615825]
+[INFO] [2024-11-07 12:16:43,547] 	 [1.0, 0.6988897022897801, 0.07352842943861232]
+[INFO] [2024-11-07 12:16:43,548] 	 [1.0, 1.484636643410235, 0.9173981726278289]
+[INFO] [2024-11-07 12:16:43,548] 	 [1.0, 0.8126196175155687, 0.8552922123173946]
+[INFO] [2024-11-07 12:16:43,548] 	 [1.0, 1.0487279429034995, 0.7364931452027008]
+[INFO] [2024-11-07 12:16:43,548] 	 [1.0, 0.940229008029277, 1.0832415005272285]
+[INFO] [2024-11-07 12:16:43,548] 	 [1.0, 0.4875547025936959, 1.3012643018670655]
+[INFO] [2024-11-07 12:16:43,548] 	 [1.0, 0.384877877897124, 0.4368129785962244]
+[INFO] [2024-11-07 12:16:43,548] 	 [1.0, 0.17479850009062203, 0.9038766943547247]
+[INFO] [2024-11-07 12:16:43,548] 	 [1.0, 0.2901781294465629, 1.134227759297733]
+[INFO] [2024-11-07 12:16:43,548] 	 [1.0, 0.8102052742659064, 1.3546304366865392]
+[INFO] [2024-11-07 12:16:43,548] 	 [1.0, 0.4653992472016855, 0.7592319015161053]
+[INFO] [2024-11-07 12:16:43,548] 	 [1.0, 1.470761739073167, 0.810997627692743]
+[INFO] [2024-11-07 12:16:43,548] 	 [1.0, 1.3757848349586967, 0.4549800377193675]
+[INFO] [2024-11-07 12:16:43,548] 	 [1.0, 0.6353990427422527, 0.07014897500932593]
+[INFO] [2024-11-07 12:16:43,548] 	 [1.0, 0.34697486941697936, 0.6044355171999354]
+[INFO] [2024-11-07 12:16:43,548] 	 [1.0, 0.023506091362608728, 1.2025841259050443]
+[INFO] [2024-11-07 12:16:43,548] 	 [1.0, 0.7203462156750298, 1.411453125172791]
+[INFO] [2024-11-07 12:16:43,548] 	 [1.0, 1.493528234022477, 0.2877947718800903]
+[INFO] [2024-11-07 12:16:43,548] 	 [1.0, 1.421505350477946, 0.8297857820199184]
+[INFO] [2024-11-07 12:16:43,548] 	 [1.0, 1.3745329156390933, 0.8167986291855596]
+[INFO] [2024-11-07 12:16:43,548] 	 [1.0, 0.7091851793287536, 0.7653984192430128]
+[INFO] [2024-11-07 12:16:43,548] 	 [1.0, 0.48934779220671637, 0.8552603314159405]
+[INFO] [2024-11-07 12:16:43,548] 	 [1.0, 0.654243302209535, 0.14633813363516063]
+[INFO] [2024-11-07 12:16:43,548] 	 [1.0, 1.4524604578293328, 1.0370977956625433]
+[INFO] [2024-11-07 12:16:43,548] 	 [1.0, 0.4647354661230745, 0.3592990558871157]
+[INFO] [2024-11-07 12:16:43,548] 	 [1.0, 0.8984766521097269, 1.1691487100693494]
+[INFO] [2024-11-07 12:16:43,548] 	 [1.0, 1.330818885482881, 0.7224826574227767]
+[INFO] [2024-11-07 12:16:43,548] 	 [1.0, 1.196976494449564, 0.3886170351673103]
+[INFO] [2024-11-07 12:16:43,548] 	 [1.0, 0.5387455913943999, 1.3693818567179994]
+[INFO] [2024-11-07 12:16:43,548] 	 [1.0, 0.15591706411729717, 0.6823178669236856]
+[INFO] [2024-11-07 12:16:43,548] 	 [1.0, 0.6010261680940812, 1.4196101618791328]
+[INFO] [2024-11-07 12:16:43,548] 	 [1.0, 0.5031507972661211, 0.6922709452254532]
+[INFO] [2024-11-07 12:16:43,548] 	 [1.0, 0.7596454844997662, 0.048393773910461235]
+[INFO] [2024-11-07 12:16:43,548] 	 [1.0, 0.37897101658225657, 1.2035339607410798]
+[INFO] [2024-11-07 12:16:43,548] 	 [1.0, 1.2665705413323587, 0.7740392229317049]
+[INFO] [2024-11-07 12:16:43,548] 	 [1.0, 0.04671289909514936, 1.4288682843538008]
+[INFO] [2024-11-07 12:16:43,548] 	 [1.0, 0.7377901499598585, 0.7025074711206704]
+[INFO] [2024-11-07 12:16:43,548] 	 [1.0, 0.39380646231398403, 1.126763600066284]
+[INFO] [2024-11-07 12:16:43,548] 	 [1.0, 0.8276607686223993, 1.3035760437978916]
+[INFO] [2024-11-07 12:16:43,548] 	 [1.0, 1.3988154809968016, 0.9328482457982483]
+[INFO] [2024-11-07 12:16:43,548] 	 [1.0, 0.2249210865795197, 1.1953652360665625]
+[INFO] [2024-11-07 12:16:43,548] 	 [1.0, 0.5557014373390662, 0.48071691265720673]
+[INFO] [2024-11-07 12:16:43,548] 	 [1.0, 1.2869500759132204, 0.3114321433520602]
+[INFO] [2024-11-07 12:16:43,548] 	 [1.0, 0.19332893452275046, 0.7518775964184532]
+[INFO] [2024-11-07 12:16:43,548] 	 [1.0, 1.18699243507191, 0.6577146671840535]
+[INFO] [2024-11-07 12:16:43,548] 	 [1.0, 1.3648855108715303, 0.14784590294432665]
+[INFO] [2024-11-07 12:16:43,548] 	 [1.0, 1.2596331285992397, 1.2036099449665127]
+[INFO] [2024-11-07 12:16:43,548] 	 - Creando el sistema lorenz_system
+[INFO] [2024-11-07 12:16:43,548] -- Ejecutando el cálculo la sección de poincaré.
+[INFO] [2024-11-07 12:16:43,562] Se han encontrado 2 puntos con cambios de signo.
+[INFO] [2024-11-07 12:16:43,575] Se han encontrado 2 puntos con cambios de signo.
+[INFO] [2024-11-07 12:16:43,589] Se han encontrado 2 puntos con cambios de signo.
+[INFO] [2024-11-07 12:16:43,602] Se han encontrado 2 puntos con cambios de signo.
+[INFO] [2024-11-07 12:16:43,615] Se han encontrado 2 puntos con cambios de signo.
+[INFO] [2024-11-07 12:16:43,632] Se han encontrado 2 puntos con cambios de signo.
+[INFO] [2024-11-07 12:16:43,646] Se han encontrado 2 puntos con cambios de signo.
+[INFO] [2024-11-07 12:16:43,660] Se han encontrado 2 puntos con cambios de signo.
+[INFO] [2024-11-07 12:16:43,673] Se han encontrado 2 puntos con cambios de signo.
+[INFO] [2024-11-07 12:16:43,686] Se han encontrado 2 puntos con cambios de signo.
+[INFO] [2024-11-07 12:16:43,700] Se han encontrado 2 puntos con cambios de signo.
+[INFO] [2024-11-07 12:16:43,713] Se han encontrado 2 puntos con cambios de signo.
+[INFO] [2024-11-07 12:16:43,726] Se han encontrado 2 puntos con cambios de signo.
+[INFO] [2024-11-07 12:16:43,739] Se han encontrado 2 puntos con cambios de signo.
+[INFO] [2024-11-07 12:16:43,751] Se han encontrado 2 puntos con cambios de signo.
+[INFO] [2024-11-07 12:16:43,763] Se han encontrado 2 puntos con cambios de signo.
+[INFO] [2024-11-07 12:16:43,775] Se han encontrado 2 puntos con cambios de signo.
+[INFO] [2024-11-07 12:16:43,788] Se han encontrado 2 puntos con cambios de signo.
+[INFO] [2024-11-07 12:16:43,801] Se han encontrado 2 puntos con cambios de signo.
+[INFO] [2024-11-07 12:16:43,814] Se han encontrado 2 puntos con cambios de signo.
+[INFO] [2024-11-07 12:16:43,827] Se han encontrado 2 puntos con cambios de signo.
+[INFO] [2024-11-07 12:16:43,840] Se han encontrado 2 puntos con cambios de signo.
+[INFO] [2024-11-07 12:16:43,853] Se han encontrado 2 puntos con cambios de signo.
+[INFO] [2024-11-07 12:16:43,865] Se han encontrado 2 puntos con cambios de signo.
+[INFO] [2024-11-07 12:16:43,878] Se han encontrado 2 puntos con cambios de signo.
+[INFO] [2024-11-07 12:16:43,890] Se han encontrado 2 puntos con cambios de signo.
+[INFO] [2024-11-07 12:16:43,904] Se han encontrado 2 puntos con cambios de signo.
+[INFO] [2024-11-07 12:16:43,917] Se han encontrado 2 puntos con cambios de signo.
+[INFO] [2024-11-07 12:16:43,931] Se han encontrado 2 puntos con cambios de signo.
+[INFO] [2024-11-07 12:16:43,944] Se han encontrado 2 puntos con cambios de signo.
+[INFO] [2024-11-07 12:16:43,956] Se han encontrado 2 puntos con cambios de signo.
+[INFO] [2024-11-07 12:16:43,969] Se han encontrado 2 puntos con cambios de signo.
+[INFO] [2024-11-07 12:16:43,982] Se han encontrado 2 puntos con cambios de signo.
+[INFO] [2024-11-07 12:16:44,001] Se han encontrado 2 puntos con cambios de signo.
+[INFO] [2024-11-07 12:16:44,015] Se han encontrado 2 puntos con cambios de signo.
+[INFO] [2024-11-07 12:16:44,027] Se han encontrado 2 puntos con cambios de signo.
+[INFO] [2024-11-07 12:16:44,040] Se han encontrado 2 puntos con cambios de signo.
+[INFO] [2024-11-07 12:16:44,053] Se han encontrado 2 puntos con cambios de signo.
+[INFO] [2024-11-07 12:16:44,066] Se han encontrado 2 puntos con cambios de signo.
+[INFO] [2024-11-07 12:16:44,079] Se han encontrado 2 puntos con cambios de signo.
+[INFO] [2024-11-07 12:16:44,092] Se han encontrado 2 puntos con cambios de signo.
+[INFO] [2024-11-07 12:16:44,107] Se han encontrado 2 puntos con cambios de signo.
+[INFO] [2024-11-07 12:16:44,120] Se han encontrado 2 puntos con cambios de signo.
+[INFO] [2024-11-07 12:16:44,133] Se han encontrado 2 puntos con cambios de signo.
+[INFO] [2024-11-07 12:16:44,145] Se han encontrado 2 puntos con cambios de signo.
+[INFO] [2024-11-07 12:16:44,157] Se han encontrado 2 puntos con cambios de signo.
+[INFO] [2024-11-07 12:16:44,170] Se han encontrado 2 puntos con cambios de signo.
+[INFO] [2024-11-07 12:16:44,183] Se han encontrado 2 puntos con cambios de signo.
+[INFO] [2024-11-07 12:16:44,197] Se han encontrado 2 puntos con cambios de signo.
+[INFO] [2024-11-07 12:16:44,211] Se han encontrado 2 puntos con cambios de signo.
+[INFO] [2024-11-07 12:16:44,536] - Sección de Poincaré guardada en plots/lorenz_system_poincare_section_t_10_nx_grid_100.png.
+[INFO] [2024-11-07 12:16:44,536] - Fin del proceso de poincare_section
+[INFO] [2024-11-07 12:16:44,536] ----------------------------------------------

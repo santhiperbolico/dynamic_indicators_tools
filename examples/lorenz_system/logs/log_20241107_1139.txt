@@ -1,0 +1,14 @@
+[INFO] [2024-11-07 11:39:17,741] Ejecutando archivo lorenz_system - 0
+[INFO] [2024-11-07 11:39:17,741] ----------------------------------------------
+[INFO] [2024-11-07 11:39:17,741] ----------------------------------------------
+[INFO] [2024-11-07 11:39:17,741] Ejecutando ftle_variational_equations
+[INFO] [2024-11-07 11:39:17,741] -- Cargando parámetros.
+[INFO] [2024-11-07 11:39:17,742] -- Parámetros del proceso:
+[INFO] [2024-11-07 11:39:17,742] 	 T=15
+[INFO] [2024-11-07 11:39:17,742] 	 Número de puntos =200
+[INFO] [2024-11-07 11:39:17,742] 	 Solver usado = solve_ivp
+[INFO] [2024-11-07 11:39:17,742] 	 Límite inferior de la malla = [1, 0, 0]
+[INFO] [2024-11-07 11:39:17,742] 	 Límite superior de la malla = [1.001, 1.5, 1.5]
+[INFO] [2024-11-07 11:39:17,742] 	 Número máximo de hilos = 1
+[INFO] [2024-11-07 11:39:17,742] 	 - Creando el sistema lorenz_system
+[INFO] [2024-11-07 11:39:17,742] -- Ejecutando el cálculo de malla con ecuaciones variacionales.
