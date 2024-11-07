@@ -1,6 +1,6 @@
 import logging
 from abc import ABC, abstractmethod
-from typing import Any, Callable, Dict, List, Sequence, Tuple, Union
+from typing import Any, Callable, Dict, List, Optional, Sequence, Tuple, Union
 
 import numpy as np
 from attr import attrs
@@ -9,6 +9,77 @@ from scipy.optimize import root_scalar
 from dynamic_indicators_tools.differentials_systems.diff_system import DiffSystem, DiffVariable
 
 PoincareMapFunction = Callable[[Union[float, np.ndarray]], Union[float, np.ndarray]]
+
+
+def roots_function(
+    function_to_null: Callable[[Union[np.ndarray, float]], Union[np.ndarray, float]],
+    t_span: Optional[list[float]] = None,
+    n_points: Optional[int] = None,
+    t_array: Optional[np.ndarray] = None,
+    params_root: dict = None,
+):
+    """
+    Función que implementa el método root_scaler para encontrar raices en funciones de R en R.
+    Las raices se buscaran en el intervalo t_span o en los valores t_array, por lo que es
+    necesario indicar al menos uno de ellos. La función le da prioridad a t_span.
+
+    Parameters
+    ----------
+    function_to_null: Callable[[Union[np.ndarray, float]], Union[np.ndarray, float]]
+        Función a anular que va de R en R.
+    t_span: Optional[list[float]], default None
+        Lista de dos elementos con el límite superior e inferior del intervalo a analizar. Si
+        es distinto de None es necesario indicar el valor n_points.
+    n_points: Optional[int], default None
+        Número de puntos con los que subdivide t_span para aplicar root_scalar.
+    t_array: Optional[np.ndarray], default None
+        Array con los delimitadores de subintervalos donde se aplicará el root_scalar. Si es
+        distinto de None el valor de t_span debe ser None ya que en caso se aplicará t_span.
+    params_root: dict
+        Diccionario con los parámetros adicionales de root_scalar de scipy.optimize.
+
+    Returns
+    -------
+    t_roots: np.array
+        Array con las raices encontradas.
+    """
+    if t_span is None and not isinstance(t_array, np.ndarray):
+        ValueError("Es necesario indicar al menos el t_span o el t_values.")
+    if t_span is not None:
+        if n_points is None:
+            ValueError("Si se indica el t_span es necesario indicar el n_points.")
+        t_values = np.linspace(t_span[0], t_span[1], n_points)
+    else:
+        t_values = t_array.copy()
+
+    if not isinstance(t_values, np.ndarray):
+        ValueError("t_values no es un array.")
+
+    default_params_root = {}
+    if params_root is not None:
+        default_params_root.update(params_root)
+    t_roots = []
+    sign_values = np.sign(function_to_null(t_values))
+    t_values = t_values[~(sign_values == 0)]  # Eliminamos los ceros que puede haber en los límites
+    mask_values = np.ones(t_values.size).astype(bool)
+    sign_values = np.sign(function_to_null(t_values))
+    mask_values[1:] = (sign_values[1:] * sign_values[:-1]) < 0
+    t_values = t_values[mask_values]
+    logging.info(f"Se han encontrado {t_values.size} puntos con cambios de signo.")
+
+    for i in range(t_values.size - 1):
+        root = None
+        try:
+            default_params_root.update({"bracket": [t_values[i], t_values[i + 1]]})
+            root_result = root_scalar(function_to_null, **default_params_root)
+            converged = root_result.converged
+            root = root_result.root
+        except ValueError:
+            converged = False
+        if converged:
+            t_roots.append(root)
+    t_roots = np.array(t_roots)
+    return t_roots
 
 
 def poincare_section_generator(
@@ -208,26 +279,7 @@ class PoincareSectionInterpolate(PoincareSectionGrid):
         _, _ = diff_system.solve_function(solver_method, t_span, x0, args, params_general_solver)
         poincare_section = poincare_section_generator(diff_system.variable, poincare_map, pm_args)
 
-        t_roots = []
-        mask_values = np.ones(t_values.size).astype(bool)
-        sign_values = np.sign(poincare_section(t_values))
-        mask_values[1:] = (sign_values[1:] + sign_values[:-1]) == 0
-        t_values = t_values[mask_values]
-
-        logging.info(f"Se han encontrado {t_values.size} puntos con cambios de signo.")
-
-        for i in range(t_values.size - 1):
-            root = None
-            try:
-                default_params_root.update({"bracket": [t_values[i], t_values[i + 1]]})
-                root_result = root_scalar(poincare_section, **default_params_root)
-                converged = root_result.converged
-                root = root_result.root
-            except ValueError:
-                converged = False
-            if converged:
-                t_roots.append(root)
-        t_roots = np.array(t_roots)
+        t_roots = roots_function(poincare_section, t_array=t_values)
         values_roots = np.array([])
         if t_roots.size > 0:
             values_roots = diff_system.variable.solution(t_roots).T
